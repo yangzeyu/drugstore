@@ -1,0 +1,17 @@
+include 'dr-manage','dr-api','drugstore-manage'
+include 'constant','dto','entity','mapper','service', 'service-api'
+include	'util'
+
+project(":constant").projectDir = new File('module/constant')
+project(":dto").projectDir = new File('module/dto')
+project(":entity").projectDir = new File('module/entity')
+project(":mapper").projectDir = new File('module/mapper')
+project(":service").projectDir = new File('module/service')
+project(":service-api").projectDir = new File('module/service-api')
+project(":util").projectDir = new File('module/util')
+rootProject.name = 'drugstore_regulation'
+
+rootProject.children.each {
+	it.buildFileName = it.name + '.gradle'
+}
+

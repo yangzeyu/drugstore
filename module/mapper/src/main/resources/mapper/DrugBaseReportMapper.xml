@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.report.DrugBaseReportMapper">
+
+    <resultMap id="BaseResultMap" type="com.jsmscp.dr.dto.DrugBaseReportDto">
+        <result column="good_name" property="goodName"/>
+        <result column="dosage_form" property="dosageForm"/>
+        <result column="spec" property="spec"/>
+        <result column="manufacture_Name" property="manufactureName"/>
+        <result column="drugStore_Name" property="drugStoreName"/>
+        <result column="drug_In_Price" property="storeInPrice"/>
+        <result column="drug_In_Number" property="storeInNumber"/>
+        <result column="drug_Out_Price" property="storeOutPrice"/>
+        <result column="drug_Out_Number" property="storeOutNumber"/>
+    </resultMap>
+
+    <select id="findDrugBaseReport" resultMap="BaseResultMap">
+        SELECT
+        a.good_name,
+        a.dosage_form,
+        a.spec,
+        a.store_name drugStore_Name,
+        a.manufacture_name,
+        a.outNumber drug_Out_Number,
+        a.outPrice drug_Out_Price,
+        b.inNumber drug_In_Number,
+        b.inPrice drug_In_Price
+        FROM
+        (
+        SELECT
+        db.id,
+        db.good_name,
+        db.dosage_form,
+        db.spec,
+        ds.`name` store_name,
+        m.`name` manufacture_name,
+        sum(dsoi.quantity) outNumber,
+        sum(dso.price) outPrice
+        FROM
+        drug_base db
+        JOIN drug_catalog dc ON db.id = dc.drug_id
+        JOIN drug_stock_out_item dsoi ON dsoi.catalog_id = dc.id
+        JOIN drug_stock_out dso ON dso.id = dsoi.store_out_id
+        JOIN drug_store ds ON ds.id = dso.store_id
+        JOIN manufacture m ON db.manufacture_id = m.id
+        <where>
+            <if test="goodName != null and goodName != ''">
+              <bind name="name" value="'%'+goodName+'%'"/>
+                db.good_name LIKE #{name}
+            </if>
+            <if test="manufactureId != null">
+                AND db.manufacture_id = #{manufactureId}
+        </if>
+            <if test="platFormCode != null  and platFormCode != ''">
+                <bind name="drugCode" value="'%'+platFormCode+'%'"/>
+                AND db.platform_code LIKE #{drugCode}
+           </if>
+        <if test="startTime != null and startTime != ''">
+                 <![CDATA[ AND dso.out_date >= #{startTime} ]]>
+        </if>
+        <if test="endTime != null and endTime != ''">
+                <![CDATA[ AND dso.out_date <= #{endTime} ]]>
+        </if>
+        </where>
+        GROUP BY
+        db.id,
+        dso.out_date,
+        db.platform_code,
+        db.manufacture_id,
+        db.good_name,
+        db.dosage_form,
+        db.spec,
+        ds.`name`,
+        m.`name`
+        ) a
+        JOIN (
+        SELECT
+        db.id,
+        db.good_name,
+        db.dosage_form,
+        db.spec,
+        ds.`name` store_name,
+        m.`name` manufacture_name,
+        sum(ddi.quantity) inNumber,
+        sum(dd.price) inPrice
+        FROM
+        drug_base db
+        JOIN drug_catalog dc ON db.id = dc.drug_id
+        JOIN drug_delivery_item ddi ON ddi.catalog_id = dc.id
+        JOIN drug_delivery dd ON dd.id = ddi.deliver_id
+        JOIN drug_store ds ON ds.id = dd.store_id
+        JOIN manufacture m ON db.manufacture_id = m.id
+        <where>
+            <if test="goodName != null and goodName != ''">
+                <bind name="name" value="'%'+goodName+'%'"/>
+                db.good_name LIKE #{name}
+            </if>
+            <if test="manufactureId != null">
+                AND db.manufacture_id = #{manufactureId}
+            </if>
+            <if test="platFormCode != null  and platFormCode != ''">
+                <bind name="drugCode" value="'%'+platFormCode+'%'"/>
+                AND db.platform_code LIKE #{drugCode}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                <![CDATA[ AND dd.deliver_date >= #{startTime} ]]>
+            </if>
+            <if test="endTime != null and endTime != ''">
+                <![CDATA[ AND dd.deliver_date <= #{endTime} ]]>
+            </if>
+        </where>
+        GROUP BY
+        db.id,
+        db.good_name,
+        db.dosage_form,
+        db.spec,
+        store_name,
+        manufacture_name
+        ) b ON a.id = b.id
+        LIMIT #{pageNo},#{pageSize}
+    </select>
+
+    <select id="findCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        from(
+        SELECT
+        db.id,
+        db.good_name,
+        db.dosage_form,
+        db.spec,
+        ds.`name` store_name,
+        m.`name` manufacture_name,
+        sum(dsoi.quantity) outNumber,
+        sum(dso.price) outPrice
+        FROM
+        drug_base db
+        JOIN drug_catalog dc ON db.id = dc.drug_id
+        JOIN drug_stock_out_item dsoi ON dsoi.catalog_id = dc.id
+        JOIN drug_stock_out dso ON dso.id = dsoi.store_out_id
+        JOIN drug_store ds ON ds.id = dso.store_id
+        JOIN manufacture m ON db.manufacture_id = m.id
+        <where>
+            <if test="goodName != null and goodName != ''">
+                <bind name="name" value="'%'+goodName+'%'"/>
+                db.good_name LIKE #{name}
+            </if>
+            <if test="manufactureId != null">
+                AND db.manufacture_id = #{manufactureId}
+            </if>
+            <if test="platFormCode != null  and platFormCode != ''">
+                <bind name="drugCode" value="'%'+platFormCode+'%'"/>
+                AND db.platform_code LIKE #{drugCode}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                <![CDATA[ AND dso.out_date >= #{startTime} ]]>
+            </if>
+            <if test="endTime != null and endTime != ''">
+                <![CDATA[ AND dso.out_date <= #{endTime} ]]>
+            </if>
+        </where>
+        GROUP BY
+        db.id,
+        dso.out_date,
+        db.platform_code,
+        db.manufacture_id,
+        db.good_name,
+        db.dosage_form,
+        db.spec,
+        ds.`name`,
+        m.`name`
+        ) a
+        RIGHT JOIN (
+        SELECT
+        db.id,
+        db.good_name,
+        db.dosage_form,
+        db.spec,
+        ds.`name` store_name,
+        m.`name` manufacture_name,
+        sum(ddi.quantity) inNumber,
+        sum(dd.price) inPrice
+        FROM
+        drug_base db
+        JOIN drug_catalog dc ON db.id = dc.drug_id
+        JOIN drug_delivery_item ddi ON ddi.catalog_id = dc.id
+        JOIN drug_delivery dd ON dd.id = ddi.deliver_id
+        JOIN drug_store ds ON ds.id = dd.store_id
+        JOIN manufacture m ON db.manufacture_id = m.id
+        <where>
+            <if test="goodName != null and goodName != ''">
+                <bind name="name" value="'%'+goodName+'%'"/>
+                db.good_name LIKE #{name}
+            </if>
+            <if test="manufactureId != null">
+                AND db.manufacture_id = #{manufactureId}
+            </if>
+            <if test="platFormCode != null  and platFormCode != ''">
+                <bind name="drugCode" value="'%'+platFormCode+'%'"/>
+                AND db.platform_code LIKE #{drugCode}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                <![CDATA[ AND dd.deliver_date >= #{startTime} ]]>
+            </if>
+            <if test="endTime != null and endTime != ''">
+                <![CDATA[ AND dd.deliver_date <= #{endTime} ]]>
+            </if>
+        </where>
+        GROUP BY
+        db.id,
+        db.good_name,
+        db.dosage_form,
+        db.spec,
+        store_name,
+        manufacture_name
+        ) b ON a.id = b.id
+    </select>
+</mapper>

@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.DrugInvoiceMapper">
+  <resultMap id="BaseResultMap" type="com.jsmscp.dr.entity.DrugInvoice">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="store_id" jdbcType="INTEGER" property="storeId" />
+    <result column="invoice_code" jdbcType="VARCHAR" property="invoiceCode" />
+    <result column="invoice_number" jdbcType="VARCHAR" property="invoiceNumber" />
+    <result column="invoice_date" jdbcType="TIMESTAMP" property="invoiceDate" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="check_code" jdbcType="VARCHAR" property="checkCode" />
+    <result column="req_status" jdbcType="TINYINT" property="reqStatus" />
+    <result column="query_invoice_status" jdbcType="TINYINT" property="queryInvoiceStatus" />
+    <result column="ext_1" jdbcType="VARCHAR" property="ext1" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jsmscp.dr.entity.DrugInvoice">
+    <result column="return_message" jdbcType="LONGVARCHAR" property="returnMessage" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, store_id, invoice_code, invoice_number, invoice_date, type, price, check_code,
+    req_status, query_invoice_status, ext_1, create_at, update_at
+  </sql>
+  <sql id="Blob_Column_List">
+    return_message
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from drug_invoice
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from drug_invoice
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jsmscp.dr.entity.DrugInvoice">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_invoice (store_id, invoice_code, invoice_number,
+    invoice_date, type, price,
+    check_code, req_status, query_invoice_status,
+    ext_1, create_at, update_at,
+    return_message)
+    values (#{storeId,jdbcType=INTEGER}, #{invoiceCode,jdbcType=VARCHAR}, #{invoiceNumber,jdbcType=VARCHAR},
+    #{invoiceDate,jdbcType=TIMESTAMP}, #{type,jdbcType=TINYINT}, #{price,jdbcType=VARCHAR},
+    #{checkCode,jdbcType=VARCHAR}, #{reqStatus,jdbcType=TINYINT}, #{queryInvoiceStatus,jdbcType=TINYINT},
+    #{ext1,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP},
+    #{returnMessage,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jsmscp.dr.entity.DrugInvoice">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_invoice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="invoiceCode != null">
+        invoice_code,
+      </if>
+      <if test="invoiceNumber != null">
+        invoice_number,
+      </if>
+      <if test="invoiceDate != null">
+        invoice_date,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="checkCode != null">
+        check_code,
+      </if>
+      <if test="reqStatus != null">
+        req_status,
+      </if>
+      <if test="queryInvoiceStatus != null">
+        query_invoice_status,
+      </if>
+      <if test="ext1 != null">
+        ext_1,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="returnMessage != null">
+        return_message,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceCode != null">
+        #{invoiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceNumber != null">
+        #{invoiceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceDate != null">
+        #{invoiceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCode != null">
+        #{checkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="reqStatus != null">
+        #{reqStatus,jdbcType=TINYINT},
+      </if>
+      <if test="queryInvoiceStatus != null">
+        #{queryInvoiceStatus,jdbcType=TINYINT},
+      </if>
+      <if test="ext1 != null">
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returnMessage != null">
+        #{returnMessage,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jsmscp.dr.entity.DrugInvoice">
+    update drug_invoice
+    <set>
+      <if test="storeId != null">
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceCode != null">
+        invoice_code = #{invoiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceNumber != null">
+        invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceDate != null">
+        invoice_date = #{invoiceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCode != null">
+        check_code = #{checkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="reqStatus != null">
+        req_status = #{reqStatus,jdbcType=TINYINT},
+      </if>
+      <if test="queryInvoiceStatus != null">
+        query_invoice_status = #{queryInvoiceStatus,jdbcType=TINYINT},
+      </if>
+      <if test="ext1 != null">
+        ext_1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returnMessage != null">
+        return_message = #{returnMessage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jsmscp.dr.entity.DrugInvoice">
+    update drug_invoice
+    set store_id = #{storeId,jdbcType=INTEGER},
+    invoice_code = #{invoiceCode,jdbcType=VARCHAR},
+    invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
+    invoice_date = #{invoiceDate,jdbcType=TIMESTAMP},
+    type = #{type,jdbcType=TINYINT},
+    price = #{price,jdbcType=VARCHAR},
+    check_code = #{checkCode,jdbcType=VARCHAR},
+    req_status = #{reqStatus,jdbcType=TINYINT},
+    query_invoice_status = #{queryInvoiceStatus,jdbcType=TINYINT},
+    ext_1 = #{ext1,jdbcType=VARCHAR},
+    create_at = #{createAt,jdbcType=TIMESTAMP},
+    update_at = #{updateAt,jdbcType=TIMESTAMP},
+    return_message = #{returnMessage,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jsmscp.dr.entity.DrugInvoice">
+    update drug_invoice
+    set store_id = #{storeId,jdbcType=INTEGER},
+      invoice_code = #{invoiceCode,jdbcType=VARCHAR},
+      invoice_number = #{invoiceNumber,jdbcType=VARCHAR},
+      invoice_date = #{invoiceDate,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=TINYINT},
+      price = #{price,jdbcType=VARCHAR},
+      check_code = #{checkCode,jdbcType=VARCHAR},
+      req_status = #{reqStatus,jdbcType=TINYINT},
+      query_invoice_status = #{queryInvoiceStatus,jdbcType=TINYINT},
+      ext_1 = #{ext1,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findByNumber" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from drug_invoice
+    where invoice_number = #{invoiceNo,jdbcType=VARCHAR}
+    <if test="storeId!=null">
+      and store_id = #{storeId,jdbcType=INTEGER}
+    </if>
+  </select>
+
+  <select id="findInvoiceItem" resultType="com.jsmscp.dr.dto.DrugInvoiceDto">
+    SELECT
+      di.id,
+      ds.`name`,
+      di.invoice_code,
+      di.invoice_number,
+      di.check_code,
+      di.invoice_date,
+      di.type,
+      di.price
+    FROM
+        drug_invoice di
+    JOIN drug_delivery_invoice_relation ddir ON ddir.invoice_id = di.id
+    JOIN drug_delivery dd ON ddir.delivery_id = dd.id
+    JOIN drug_store ds on di.store_id = ds.id
+    WHERE
+    dd.id =#{deliverId}
+
+  </select>
+
+  <select id="findInvoiceReport" resultType="com.jsmscp.dr.dto.InvoiceCompareDto">
+    SELECT
+    ds.`name` store_name,
+    di.invoice_code,
+    dd.id delivery_id
+    FROM drug_invoice di
+    JOIN drug_delivery_invoice_relation ddir ON ddir.invoice_id = di.id
+    JOIN drug_delivery dd ON ddir.delivery_id = dd.id
+    JOIN drug_store ds ON dd.store_id = ds.id
+    <where>
+      <if test="storeId != null">
+        dd.store_id = #{storeId}
+      </if>
+      <if test="invoiceCode != null and invoiceCode != ''">
+        AND di.invoice_code = #{invoiceCode}
+      </if>
+    </where>
+    ORDER BY dd.deliver_date
+    LIMIT #{pageNo}, #{pageSize}
+  </select>
+
+  <select id="findInvoiceReportCount" resultType="java.lang.Integer">
+    SELECT
+    COUNT(*)
+    FROM drug_invoice di
+    JOIN drug_delivery_invoice_relation ddir ON ddir.invoice_id = di.id
+    JOIN drug_delivery dd ON ddir.delivery_id = dd.id
+    JOIN drug_delivery_item ddi ON ddi.deliver_id = dd.id
+    JOIN drug_store ds ON dd.store_id = ds.id
+    <where>
+      <if test="storeId != null">
+        dd.store_id = #{storeId}
+      </if>
+      <if test="invoiceCode != null and invoiceCode != ''">
+        AND di.invoice_code = #{invoiceCode}
+      </if>
+    </where>
+  </select>
+
+  <select id="findInvoiceDeliverReport" resultType="com.jsmscp.dr.dto.StoreDeliveryInvoiceReportDto">
+    SELECT
+      ds.`name` store_name,
+      di.invoice_code,
+      di.price invoice_price,
+      dd.deliver_code,
+      dd.price deliver_price
+    FROM
+        drug_store ds
+    JOIN drug_delivery dd ON ds.id = dd.store_id
+    JOIN drug_delivery_invoice_relation ddir ON ddir.delivery_id = dd.id
+    JOIN drug_invoice di ON ddir.invoice_id = di.id
+    <where>
+      <if test="storeId != null">
+        ds.id = #{storeId}
+      </if>
+      <if test="invoiceCode != null and invoiceCode != ''">
+        AND di.invoice_code = #{invoiceCode}
+      </if>
+      <if test="invoiceType != null">
+        AND di.type =#{invoiceType}
+      </if>
+    </where>
+    ORDER BY dd.deliver_date
+    LIMIT #{pageNo}, #{pageSize}
+  </select>
+
+  <select id="findInvoiceDeliverCount" resultType="java.lang.Integer">
+    SELECT
+      count(*)
+    FROM
+      drug_store ds
+    JOIN drug_delivery dd ON ds.id = dd.store_id
+    JOIN drug_delivery_invoice_relation ddir ON ddir.delivery_id = dd.id
+    JOIN drug_invoice di ON ddir.invoice_id = di.id
+    <where>
+      <if test="storeId != null">
+        ds.id = #{storeId}
+      </if>
+      <if test="invoiceCode != null and invoiceCode != ''">
+        AND di.invoice_code = #{invoiceCode}
+      </if>
+      <if test="invoiceType != null">
+        AND di.type =#{invoiceType}
+      </if>
+    </where>
+  </select>
+
+  <select id="findInvoice" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    drug_invoice
+    WHERE
+    store_id = #{storeId}
+    AND invoice_code = #{invoiceCode}
+  </select>
+
+  <select id="findInvoiceMsg" resultType="com.jsmscp.dr.dto.InvoiceCompareDto">
+     SELECT
+      ds.`name` store_name,
+      di.invoice_code,
+      di.price invoice_price,
+      dd.deliver_code,
+      dd.price deliver_price
+    FROM
+        drug_store ds
+    JOIN drug_delivery dd ON ds.id = dd.store_id
+    JOIN drug_delivery_invoice_relation ddir ON ddir.delivery_id = dd.id
+    JOIN drug_invoice di ON ddir.invoice_id = di.id
+    <where>
+      <if test="storeId != null">
+        ds.id = #{storeId}
+      </if>
+      <if test="invoiceCode != null and invoiceCode != ''">
+        AND di.invoice_code = #{invoiceCode}
+      </if>
+      <if test="invoiceType != null">
+        AND di.type =#{invoiceType}
+      </if>
+    </where>
+  </select>
+
+</mapper>
+

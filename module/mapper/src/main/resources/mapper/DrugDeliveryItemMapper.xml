@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.DrugDeliveryItemMapper">
+  <resultMap id="BaseResultMap" type="com.jsmscp.dr.entity.DrugDeliveryItem">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="deliver_id" jdbcType="BIGINT" property="deliverId" />
+    <result column="drug_code" jdbcType="VARCHAR" property="drugCode" />
+    <result column="drug_id" jdbcType="BIGINT" property="drugId" />
+    <result column="catalog_id" jdbcType="BIGINT" property="catalogId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="quantity" jdbcType="DECIMAL" property="quantity" />
+    <result column="spec" jdbcType="VARCHAR" property="spec" />
+    <result column="dosage_form" jdbcType="VARCHAR" property="dosageForm" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="unit_price" jdbcType="DECIMAL" property="unitPrice" />
+    <result column="batch_no" jdbcType="VARCHAR" property="batchNo" />
+    <result column="expire" jdbcType="VARCHAR" property="expire" />
+    <result column="mfr" jdbcType="VARCHAR" property="mfr" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, deliver_id, drug_code, drug_id, catalog_id, name, quantity, spec, dosage_form,
+    unit, unit_price, batch_no, expire, mfr, create_at, update_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from drug_delivery_item
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from drug_delivery_item
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jsmscp.dr.entity.DrugDeliveryItem">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_delivery_item (deliver_id, drug_code, drug_id,
+    catalog_id, name, quantity,
+    spec, dosage_form, unit,
+    unit_price, batch_no, expire,
+    mfr, create_at, update_at
+    )
+    values (#{deliverId,jdbcType=BIGINT}, #{drugCode,jdbcType=VARCHAR}, #{drugId,jdbcType=BIGINT},
+    #{catalogId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{quantity,jdbcType=DECIMAL},
+    #{spec,jdbcType=VARCHAR}, #{dosageForm,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR},
+    #{unitPrice,jdbcType=DECIMAL}, #{batchNo,jdbcType=VARCHAR}, #{expire,jdbcType=VARCHAR},
+    #{mfr,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jsmscp.dr.entity.DrugDeliveryItem">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_delivery_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deliverId != null">
+        deliver_id,
+      </if>
+      <if test="drugCode != null">
+        drug_code,
+      </if>
+      <if test="drugId != null">
+        drug_id,
+      </if>
+      <if test="catalogId != null">
+        catalog_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="spec != null">
+        spec,
+      </if>
+      <if test="dosageForm != null">
+        dosage_form,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="unitPrice != null">
+        unit_price,
+      </if>
+      <if test="batchNo != null">
+        batch_no,
+      </if>
+      <if test="expire != null">
+        expire,
+      </if>
+      <if test="mfr != null">
+        mfr,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deliverId != null">
+        #{deliverId,jdbcType=BIGINT},
+      </if>
+      <if test="drugCode != null">
+        #{drugCode,jdbcType=VARCHAR},
+      </if>
+      <if test="drugId != null">
+        #{drugId,jdbcType=BIGINT},
+      </if>
+      <if test="catalogId != null">
+        #{catalogId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=DECIMAL},
+      </if>
+      <if test="spec != null">
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null">
+        #{unitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="batchNo != null">
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="expire != null">
+        #{expire,jdbcType=VARCHAR},
+      </if>
+      <if test="mfr != null">
+        #{mfr,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jsmscp.dr.entity.DrugDeliveryItem">
+    update drug_delivery_item
+    <set>
+      <if test="deliverId != null">
+        deliver_id = #{deliverId,jdbcType=BIGINT},
+      </if>
+      <if test="drugCode != null">
+        drug_code = #{drugCode,jdbcType=VARCHAR},
+      </if>
+      <if test="drugId != null">
+        drug_id = #{drugId,jdbcType=BIGINT},
+      </if>
+      <if test="catalogId != null">
+        catalog_id = #{catalogId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=DECIMAL},
+      </if>
+      <if test="spec != null">
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        dosage_form = #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null">
+        unit_price = #{unitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="batchNo != null">
+        batch_no = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="expire != null">
+        expire = #{expire,jdbcType=VARCHAR},
+      </if>
+      <if test="mfr != null">
+        mfr = #{mfr,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jsmscp.dr.entity.DrugDeliveryItem">
+    update drug_delivery_item
+    set deliver_id = #{deliverId,jdbcType=BIGINT},
+      drug_code = #{drugCode,jdbcType=VARCHAR},
+      drug_id = #{drugId,jdbcType=BIGINT},
+      catalog_id = #{catalogId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=DECIMAL},
+      spec = #{spec,jdbcType=VARCHAR},
+      dosage_form = #{dosageForm,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      unit_price = #{unitPrice,jdbcType=DECIMAL},
+      batch_no = #{batchNo,jdbcType=VARCHAR},
+      expire = #{expire,jdbcType=VARCHAR},
+      mfr = #{mfr,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

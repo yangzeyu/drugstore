@@ -1,0 +1,12 @@
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-aop')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-freemarker')
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('mysql:mysql-connector-java:5.1.46')
+	compile('org.springframework.security:spring-security-taglibs')
+	compile('javax.servlet.jsp:jsp-api:2.2.1-b03')
+	compile('com.alibaba:druid-spring-boot-starter:1.1.10')
+
+	compile project(':service')
+}

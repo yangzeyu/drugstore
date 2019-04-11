@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.SysRoleMenuRelationMapper">
+  <resultMap id="BaseResultMap" type="com.jsmscp.dr.entity.SysRoleMenuRelation">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="menu_id" jdbcType="INTEGER" property="menuId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="menu_type" jdbcType="TINYINT" property="menuType" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, menu_id, menu_type, role_id, create_at, update_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_menu_relation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_role_menu_relation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jsmscp.dr.entity.SysRoleMenuRelation">
+    insert into sys_role_menu_relation (id, menu_id, menu_type, role_id,
+      create_at, update_at)
+    values (#{id,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER}, #{menuType,jdbcType=TINYINT}, #{roleId,jdbcType=INTEGER},
+      #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jsmscp.dr.entity.SysRoleMenuRelation">
+    insert into sys_role_menu_relation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="menuId != null">
+        menu_id,
+      </if>
+      <if test="menuType != null">
+        menu_type,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="menuId != null">
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="menuType != null">
+        #{menuType,jdbcType=TINYINT},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jsmscp.dr.entity.SysRoleMenuRelation">
+    update sys_role_menu_relation
+    <set>
+      <if test="menuId != null">
+        menu_id = #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="menuType != null">
+        menu_type = #{menuType,jdbcType=TINYINT},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jsmscp.dr.entity.SysRoleMenuRelation">
+    update sys_role_menu_relation
+    set menu_id = #{menuId,jdbcType=INTEGER},
+      menu_type = #{menuType,jdbcType=TINYINT},
+      role_id = #{roleId,jdbcType=INTEGER},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findMenuByRoleId" resultType="com.jsmscp.dr.entity.SysMenu">
+    <bind name="MENU" value="@com.jsmscp.dr.constant.Constant@MENU_TYPE_MENU" />
+    SELECT sm.* FROM sys_role_menu_relation srmr
+    JOIN sys_role sr ON srmr.role_id = sr.id
+    JOIN sys_menu sm ON srmr.menu_id = sm.id
+    WHERE sr.id = #{roleId} and srmr.menu_type = #{MENU}
+  </select>
+  <select id="findOperationByRole" resultType="com.jsmscp.dr.entity.SysMenuOperation">
+    <bind name="MENU_TYPE_OPERATION" value="@com.jsmscp.dr.constant.Constant@MENU_TYPE_OPERATION" />
+    SELECT sm.* FROM sys_role_menu_relation srmr
+    JOIN sys_role sr ON srmr.role_id = sr.id
+    JOIN sys_menu_operation sm ON srmr.menu_id = sm.id
+    WHERE sr.id = #{roleId} and srmr.menu_type = #{MENU_TYPE_OPERATION}
+  </select>
+  <delete id="deleteByRoleId" parameterType="integer">
+    delete from sys_role_menu_relation
+    where role_id = #{roleId}
+  </delete>
+</mapper>

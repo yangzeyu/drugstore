@@ -1,0 +1,24 @@
+spring:
+  profiles:
+    active: tst
+  jackson:
+    default-property-inclusion: non_null
+  http:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+    encoding:
+      charset: UTF-8
+      force: true
+  output:
+    ansi:
+      enabled: detect
+  cache:
+    cache-names: drugStoreCache
+    caffeine:
+      spec: maximumSize=500, expireAfterAccess=10m
+
+mybatis:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true

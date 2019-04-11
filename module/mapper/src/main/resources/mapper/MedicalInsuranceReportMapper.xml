@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.report.MedicalInsuranceReportMapper">
+    <resultMap id="BaseResultMap" type="com.jsmscp.dr.dto.MedicalInsuranceReportDto">
+        <result column="mic" property="medicalInsuranceCode"/>
+        <result column="three_directory_name" property="threeDirectoryName"/>
+        <result column="store_name" property="storeName"/>
+        <result column="platform_code" property="platformCode"/>
+        <result column="good_name" property="goodName"/>
+        <result column="dosage_form" property="dosageForm"/>
+        <result column="manufactureName" property="manufactureName"/>
+        <result column="spec" property="spec"/>
+        <result column="quantity" property="storeOutNumber"/>
+        <result column="collect_lvl" property="collectLvl"/>
+    </resultMap>
+
+    <!--医保进销存统计分析-->
+    <select id="findAllInsuranceReport" resultMap="BaseResultMap">
+        SELECT
+        mi.medical_insurance_code mic,
+        mi.three_directory_name,
+        ds.`name` store_name,
+        db.platform_code,
+        db.good_name,
+        db.dosage_form,
+        m.`name` manufactureName,
+        db.spec,
+        dsoi.quantity,
+        mi.collect_lvl
+        FROM medical_insurance mi
+        LEFT JOIN drug_base db ON db.insurance_id = mi.id
+        LEFT JOIN drug_stock_out_item dsoi ON dsoi.drug_id = db.id
+        LEFT JOIN drug_stock_out dso ON dsoi.store_out_id = dso.id
+        LEFT JOIN drug_store ds ON ds.id = dso.store_id
+        LEFT JOIN manufacture m ON m.id = db.manufacture_id
+        <where>
+            db.insurance_id IS NOT NULL AND dsoi.quantity IS NOT NULL
+            <if test="threeDirectoryName != null and threeDirectoryName !=''">
+                <bind name="insuranceName" value="'%'+threeDirectoryName +'%'"/>
+                AND mi.three_directory_name LIKE #{insuranceName}
+            </if>
+            <if test="medicalInsuranceCode != null and medicalInsuranceCode !=''">
+                <bind name="insuranceCode" value="'%'+medicalInsuranceCode +'%'"/>
+                AND mi.medical_insurance_code LIKE #{insuranceCode}
+            </if>
+            <if test="collectLvl != null">
+                AND mi.collect_lvl = #{collectLvl}
+            </if>
+        </where>
+        LIMIT #{pageNo},#{pageSize}
+    </select>
+
+    <select id="findCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM (
+        SELECT
+        mi.medical_insurance_code mic,
+        mi.three_directory_name,
+        ds.`name` store_name,
+        db.platform_code,
+        db.good_name,
+        db.dosage_form,
+        m.`name` manufactureName,
+        db.spec,
+        dsoi.quantity,
+        mi.collect_lvl
+        FROM medical_insurance mi
+        LEFT JOIN drug_base db ON db.insurance_id = mi.id
+        LEFT JOIN drug_stock_out_item dsoi ON dsoi.drug_id = db.id
+        LEFT JOIN drug_stock_out dso ON dsoi.store_out_id = dso.id
+        LEFT JOIN drug_store ds ON ds.id = dso.store_id
+        LEFT JOIN manufacture m ON m.id = db.manufacture_id
+        <where>
+            db.insurance_id IS NOT NULL
+            AND dsoi.quantity IS NOT NULL
+            <if test="threeDirectoryName != null and threeDirectoryName !=''">
+                <bind name="insuranceName" value="'%'+threeDirectoryName +'%'"/>
+                AND mi.three_directory_name LIKE #{insuranceName}
+            </if>
+            <if test="medicalInsuranceCode != null and medicalInsuranceCode !=''">
+                <bind name="insuranceCode" value="'%'+medicalInsuranceCode +'%'"/>
+                AND mi.medical_insurance_code LIKE #{insuranceCode}
+            </if>
+            <if test="collectLvl != null">
+                AND mi.collect_lvl = #{collectLvl}
+            </if>
+        </where>) a
+    </select>
+
+
+    <!--医保进销存统计分析导出-->
+    <select id="exportMedicalInsurance" resultType="com.jsmscp.dr.dto.MedicalInsuranceReportDto">
+        SELECT
+        mi.medical_insurance_code mic,
+        mi.three_directory_name,
+        ds.`name` store_name,
+        db.platform_code,
+        db.good_name,
+        db.dosage_form,
+        m.`name` manufactureName,
+        db.spec,
+        dsoi.quantity,
+        mi.collect_lvl
+        FROM medical_insurance mi
+        LEFT JOIN drug_base db ON db.insurance_id = mi.id
+        LEFT JOIN drug_stock_out_item dsoi ON dsoi.drug_id = db.id
+        LEFT JOIN drug_stock_out dso ON dsoi.store_out_id = dso.id
+        LEFT JOIN drug_store ds ON ds.id = dso.store_id
+        LEFT JOIN manufacture m ON m.id = db.manufacture_id
+        <where>
+            db.insurance_id IS NOT NULL AND dsoi.quantity IS NOT NULL
+            <if test="threeDirectoryName != null and threeDirectoryName !=''">
+                <bind name="insuranceName" value="'%'+threeDirectoryName +'%'"/>
+                AND mi.three_directory_name LIKE #{insuranceName}
+            </if>
+            <if test="medicalInsuranceCode != null and medicalInsuranceCode !=''">
+                <bind name="insuranceCode" value="'%'+medicalInsuranceCode +'%'"/>
+                AND mi.medical_insurance_code LIKE #{insuranceCode}
+            </if>
+            <if test="collectLvl != null">
+                AND mi.collect_lvl = #{collectLvl}
+            </if>
+        </where>
+    </select>
+
+</mapper>

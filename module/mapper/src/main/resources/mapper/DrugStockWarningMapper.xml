@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.DrugStockWarningMapper">
+  <resultMap id="BaseResultMap" type="com.jsmscp.dr.entity.DrugStockWarning">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="store_id" jdbcType="INTEGER" property="storeId" />
+    <result column="drug_id" jdbcType="BIGINT" property="drugId" />
+    <result column="catalog_id" jdbcType="BIGINT" property="catalogId" />
+    <result column="platform_code" jdbcType="VARCHAR" property="platformCode" />
+    <result column="batch_no" jdbcType="VARCHAR" property="batchNo" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, store_id, drug_id, catalog_id, platform_code, batch_no, type, status, create_at,
+    update_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from drug_stock_warning
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from drug_stock_warning
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jsmscp.dr.entity.DrugStockWarning">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_stock_warning (store_id, drug_id, catalog_id,
+    platform_code, batch_no, type,
+    status, create_at, update_at
+    )
+    values (#{storeId,jdbcType=INTEGER}, #{drugId,jdbcType=BIGINT}, #{catalogId,jdbcType=BIGINT},
+    #{platformCode,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT},
+    #{status,jdbcType=TINYINT}, #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jsmscp.dr.entity.DrugStockWarning">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_stock_warning
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="drugId != null">
+        drug_id,
+      </if>
+      <if test="catalogId != null">
+        catalog_id,
+      </if>
+      <if test="platformCode != null">
+        platform_code,
+      </if>
+      <if test="batchNo != null">
+        batch_no,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="drugId != null">
+        #{drugId,jdbcType=BIGINT},
+      </if>
+      <if test="catalogId != null">
+        #{catalogId,jdbcType=BIGINT},
+      </if>
+      <if test="platformCode != null">
+        #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jsmscp.dr.entity.DrugStockWarning">
+    update drug_stock_warning
+    <set>
+      <if test="storeId != null">
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="drugId != null">
+        drug_id = #{drugId,jdbcType=BIGINT},
+      </if>
+      <if test="catalogId != null">
+        catalog_id = #{catalogId,jdbcType=BIGINT},
+      </if>
+      <if test="platformCode != null">
+        platform_code = #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        batch_no = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jsmscp.dr.entity.DrugStockWarning">
+    update drug_stock_warning
+    set store_id = #{storeId,jdbcType=INTEGER},
+      drug_id = #{drugId,jdbcType=BIGINT},
+      catalog_id = #{catalogId,jdbcType=BIGINT},
+      platform_code = #{platformCode,jdbcType=VARCHAR},
+      batch_no = #{batchNo,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findAllWarning" resultType="com.jsmscp.dr.dto.DrugStockWarningDto">
+    SELECT
+        ds.id store_id,
+        ds.`name` store_name,
+        dsw.drug_id,
+        db.platform_code,
+        dsw.`type`,
+        dsw.catalog_id,
+        db.`name` drug_name,
+        MAX(dsw.update_at) update_at
+    FROM
+        drug_stock_warning dsw
+    JOIN drug_store ds ON dsw.store_id = ds.id
+    JOIN drug_base db ON dsw.drug_id = db.id
+    GROUP BY
+        ds.id,
+        ds.`name`,
+        dsw.drug_id,
+        db.platform_code,
+        dsw.`type`,
+        dsw.catalog_id,
+        db.`name`
+  </select>
+</mapper>

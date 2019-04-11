@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.DrugStockOutMapper">
+  <resultMap id="BaseResultMap" type="com.jsmscp.dr.entity.DrugStockOut">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="store_id" jdbcType="INTEGER" property="storeId" />
+    <result column="out_no" jdbcType="VARCHAR" property="outNo" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="pay_type" jdbcType="INTEGER" property="payType" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="insurance_price" jdbcType="DECIMAL" property="insurancePrice" />
+    <result column="trade_name" jdbcType="VARCHAR" property="tradeName" />
+    <result column="idcard" jdbcType="VARCHAR" property="idcard" />
+    <result column="out_date" jdbcType="TIMESTAMP" property="outDate" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, store_id, out_no, type, pay_type, price, insurance_price, trade_name, idcard,
+    out_date, create_at, update_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from drug_stock_out
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from drug_stock_out
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jsmscp.dr.entity.DrugStockOut">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_stock_out (store_id, out_no, type,
+    pay_type, price, insurance_price,
+    trade_name, idcard, out_date,
+    create_at, update_at)
+    values (#{storeId,jdbcType=INTEGER}, #{outNo,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT},
+    #{payType,jdbcType=INTEGER}, #{price,jdbcType=VARCHAR}, #{insurancePrice,jdbcType=DECIMAL},
+    #{tradeName,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, #{outDate,jdbcType=TIMESTAMP},
+    #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jsmscp.dr.entity.DrugStockOut">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_stock_out
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="outNo != null">
+        out_no,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="payType != null">
+        pay_type,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="insurancePrice != null">
+        insurance_price,
+      </if>
+      <if test="tradeName != null">
+        trade_name,
+      </if>
+      <if test="idcard != null">
+        idcard,
+      </if>
+      <if test="outDate != null">
+        out_date,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="outNo != null">
+        #{outNo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="insurancePrice != null">
+        #{insurancePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeName != null">
+        #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="outDate != null">
+        #{outDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jsmscp.dr.entity.DrugStockOut">
+    update drug_stock_out
+    <set>
+      <if test="storeId != null">
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="outNo != null">
+        out_no = #{outNo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="payType != null">
+        pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="insurancePrice != null">
+        insurance_price = #{insurancePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeName != null">
+        trade_name = #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        idcard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="outDate != null">
+        out_date = #{outDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jsmscp.dr.entity.DrugStockOut">
+    update drug_stock_out
+    set store_id = #{storeId,jdbcType=INTEGER},
+      out_no = #{outNo,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      pay_type = #{payType,jdbcType=INTEGER},
+      price = #{price,jdbcType=VARCHAR},
+      insurance_price = #{insurancePrice,jdbcType=DECIMAL},
+      trade_name = #{tradeName,jdbcType=VARCHAR},
+      idcard = #{idcard,jdbcType=VARCHAR},
+      out_date = #{outDate,jdbcType=TIMESTAMP},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+
+  <select id="findByOutNo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from drug_stock_out
+    where store_id = #{storeId,jdbcType=INTEGER} and out_no = #{outNo,jdbcType=VARCHAR}
+    limit 1
+  </select>
+
+  <select id="findDrugStockOut" resultType="com.jsmscp.dr.dto.DrugStockOutDto">
+    select
+      dso.id,
+      dso.out_no,
+      dso.type,
+      dso.out_date,
+      dso.pay_type,
+      dso.price,
+      dso.insurance_price,
+      dso.trade_name,
+      dso.idcard,
+      ds.`name` store_name,
+      ds.id store_id
+    from drug_stock_out dso
+    JOIN drug_store ds on dso.store_id = ds.id
+    JOIN drug_stock_out_item dsoi ON dsoi.store_out_id = dso.id
+    JOIN drug_catalog dc ON dsoi.catalog_id = dc.id
+    <where>
+      <if test="outNo != null and outNo != ''">
+        dso.out_no = #{outNo}
+      </if>
+      <if test="type != null">
+        AND dso.`type` = #{type}
+      </if>
+      <if test="drugStoreId != null ">
+        AND dso.store_id = #{drugStoreId}
+      </if>
+      <if test="payType != null">
+        AND dso.pay_type = #{payType}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        <![CDATA[ AND dso.out_date >= #{startTime} ]]>
+      </if>
+      <if test="endTime != null and endTime != ''">
+        <![CDATA[ AND dso.out_date <= #{endTime} ]]>
+      </if>
+      <if test="drugName !=null and drugName != ''">
+        <bind name="drugNames" value="'%'+drugName+'%'"/>
+              and dc.good_name like #{drugNames}
+      </if>
+    </where>
+      GROUP BY dso.id
+      ORDER BY out_date DESC
+      LIMIT ${pageNo},${pageSize};
+  </select>
+  <select id="findCount" resultType="java.lang.Integer">
+    SELECT count(*) FROM (select
+    COUNT(*)
+    from drug_stock_out dso
+    JOIN drug_store ds on dso.store_id = ds.id
+    JOIN drug_stock_out_item dsoi ON dsoi.store_out_id = dso.id
+    JOIN drug_catalog dc ON dsoi.catalog_id = dc.id
+    <where>
+      <if test="outNo != null and outNo != ''">
+        dso.out_no = #{outNo}
+      </if>
+      <if test="type != null">
+        AND dso.`type` = #{type}
+      </if>
+      <if test="drugStoreId != null ">
+        AND dso.store_id = #{drugStoreId}
+      </if>
+      <if test="payType != null">
+        AND dso.pay_type = #{payType}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        <![CDATA[ AND dso.out_date >= #{startTime}]]>
+      </if>
+      <if test="endTime != null and endTime != ''">
+        <![CDATA[ AND dso.out_date <= #{endTime}]]>
+      </if>
+      <if test="drugName !=null and drugName != ''">
+        <bind name="drugNames" value="'%'+drugName+'%'"/>
+        and dc.good_name like #{drugNames}
+      </if>
+
+    </where>
+    GROUP BY dso.id) a
+  </select>
+  <select id="findDrugStockOutItem" resultType="com.jsmscp.dr.dto.DrugStockOutItemDto">
+    select
+      dso.out_no,
+      dsoi.id,
+      dc.good_name drug_name,
+      dc.drug_code platform_code,
+      dsoi.quantity,
+      dsoi.dosage_form,
+      dsoi.unit_price,
+      IFNULL(dc.drug_id,0) is_pair_code,
+      dsoi.mfr,
+      dsoi.unit,
+      dsoi.spec,
+      dsoi.expire,
+      dc.store_stock
+    from drug_stock_out dso
+    JOIN drug_stock_out_item dsoi ON dso.id = dsoi.store_out_id
+    JOIN drug_catalog dc ON dsoi.catalog_id = dc.id
+    WHERE
+    dso.id = #{storeOutId}
+  </select>
+
+  <select id="findNoDrugId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM drug_stock_out where
+    store_id = #{storeId}
+  </select>
+
+  <select id="findByStockOutNo" resultType="com.jsmscp.dr.dto.DrugStockOutItemDto">
+    SELECT
+        dc.drug_code platform_code,
+        dc.good_name drug_name,
+        quantity,
+        out_no,
+        dsoi.unit,
+        dsoi.batch_no,
+        dso.pay_type,
+        dsoi.mfr,
+        ds.`name` store_name
+    FROM
+        drug_stock_out_item dsoi
+    JOIN drug_catalog dc ON dc.id = dsoi.catalog_id
+    JOIN drug_stock_out dso ON dsoi.store_out_id = dso.id
+    JOIN drug_store ds ON  dso.store_id = ds.id
+    WHERE
+        dso.out_no =#{outNo}
+        AND dso.store_id = #{storeId}
+  </select>
+
+
+  <select id="findByDrugId" resultMap="BaseResultMap">
+    SELECT
+    dsoi.id
+    FROM drug_stock_out dso
+    JOIN drug_stock_out_item dsoi on dsoi.store_out_id = dso.id
+    where
+    store_id = #{storeId}
+    AND drug_code = #{drugCode}
+  </select>
+
+  <select id="findIsPairCode" resultType="com.jsmscp.dr.dto.DrugStockOutDto">
+    SELECT
+    dso.id,
+    IFNULL(dc.drug_id,0) is_pair_code
+    from drug_stock_out dso
+    JOIN drug_stock_out_item dsoi ON dsoi.store_out_id = dso.id
+    JOIN drug_catalog dc ON dsoi.drug_code = dc.drug_code
+    <where>
+      dso.id in
+      <if test="stockOutIds != null and stockOutIds.size > 0">
+        <foreach collection="stockOutIds" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+    GROUP BY dso.id,
+    is_pair_code
+
+  </select>
+
+  <!--出库导出数据查询-->
+  <select id="exportStockOut" resultType="com.jsmscp.dr.dto.DrugStockOutDto">
+    select
+    dso.id,
+    dso.out_no,
+    dso.type,
+    dso.out_date,
+    dso.pay_type,
+    dso.price,
+    dso.insurance_price,
+    dso.trade_name,
+    dso.idcard,
+    ds.`name` store_name,
+    ds.id store_id
+    from drug_stock_out dso
+    JOIN drug_store ds on dso.store_id = ds.id
+    JOIN drug_stock_out_item dsoi ON dsoi.store_out_id = dso.id
+    JOIN drug_catalog dc ON dsoi.catalog_id = dc.id
+    <where>
+      <if test="outNo != null and outNo != ''">
+        dso.out_no = #{outNo}
+      </if>
+      <if test="type != null">
+        AND dso.`type` = #{type}
+      </if>
+      <if test="drugStoreId != null ">
+        AND dso.store_id = #{drugStoreId}
+      </if>
+      <if test="payType != null">
+        AND dso.pay_type = #{payType}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        <![CDATA[ AND dso.out_date >= #{startTime} ]]>
+      </if>
+      <if test="endTime != null and endTime != ''">
+        <![CDATA[ AND dso.out_date <= #{endTime} ]]>
+      </if>
+    </where>
+    GROUP BY dso.id
+    ORDER BY out_date DESC
+  </select>
+
+  <select id="findByStoreId" resultType="com.jsmscp.dr.dto.DrugStockOutDto">
+  SELECT
+	dsoi.catalog_id,
+	dsoi.quantity
+  FROM
+      drug_stock_out dso
+  JOIN drug_stock_out_item dsoi ON dso.id = dsoi.store_out_id
+  WHERE
+      dso.store_id = #{storeId}
+
+  </select>
+
+</mapper>

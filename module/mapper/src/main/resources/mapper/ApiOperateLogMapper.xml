@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.ApiOperateLogMapper">
+  <resultMap id="BaseResultMap" type="com.jsmscp.dr.entity.ApiOperateLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="operate_at" jdbcType="TIMESTAMP" property="operateAt" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="req_param" jdbcType="VARCHAR" property="reqParam" />
+    <result column="resp_content" jdbcType="VARCHAR" property="respContent" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, operator, operate_at, status, url, ip, req_param, create_at, update_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from api_operate_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from api_operate_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jsmscp.dr.entity.ApiOperateLog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into api_operate_log (operator, operate_at, status, url,
+    ip, req_param, resp_content, create_at,
+    update_at)
+    values (#{operator,jdbcType=VARCHAR}, #{operateAt,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR},
+    #{ip,jdbcType=VARCHAR}, #{reqParam,jdbcType=VARCHAR}, #{respContent,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP},
+    #{updateAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jsmscp.dr.entity.ApiOperateLog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into api_operate_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateAt != null">
+        operate_at,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="reqParam != null">
+        req_param,
+      </if>
+      <if test="respContent != null">
+        resp_content,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateAt != null">
+        #{operateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="reqParam != null">
+        #{reqParam,jdbcType=VARCHAR},
+      </if>
+      <if test="respContent != null">
+        #{respContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jsmscp.dr.entity.ApiOperateLog">
+    update api_operate_log
+    <set>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateAt != null">
+        operate_at = #{operateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="reqParam != null">
+        req_param = #{reqParam,jdbcType=VARCHAR},
+      </if>
+      <if test="respContent != null">
+        resp_content = #{respContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jsmscp.dr.entity.ApiOperateLog">
+    update api_operate_log
+    set operator = #{operator,jdbcType=VARCHAR},
+      operate_at = #{operateAt,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      req_param = #{reqParam,jdbcType=VARCHAR},
+      resp_content = #{respContent,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="list" resultType="com.jsmscp.dr.dto.OperateDto">
+    SELECT
+    aol.id,
+    aol.operator app_code,
+    ds.`name` store_name,
+    aol.url,
+    aol.req_param,
+    aol.resp_content,
+    aol.operate_at
+    FROM
+    api_operate_log aol
+    JOIN drug_store ds ON aol.operator = ds.app_code
+    <where>
+      <if test="operator != null and operator != ''">
+        aol.operator = #{operator}
+      </if>
+      <if test="resp != null and resp != ''">
+        <bind name="response" value="'%' + resp + '%'"/>
+        AND aol.resp_content LIKE #{response}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        <![CDATA[ AND operate_at >= #{startTime} ]]>
+      </if>
+      <if test="endTime != null and endTime != ''">
+        <![CDATA[ AND operate_at <= #{endTime} ]]>
+      </if>
+      <if test="req_url != null and req_url != ''">
+        AND url = #{req_url}
+      </if>
+    </where>
+      ORDER BY operate_at
+      LIMIT ${pageNo},${pageSize};
+  </select>
+  <select id="findCount" resultType="java.lang.Integer">
+    SELECT
+    count(*)
+    FROM
+    api_operate_log aol
+    JOIN drug_store ds ON aol.operator = ds.app_code
+    <where>
+    <if test="operator != null and operator != ''">
+      aol.operator = #{operator}
+    </if>
+    <if test="resp != null and resp != ''">
+      <bind name="response" value="'%' + resp + '%'"/>
+      AND aol.resp_content LIKE #{response}
+    </if>
+    <if test="startTime != null and startTime != ''">
+      <![CDATA[ AND operate_at >= #{startTime} ]]>
+    </if>
+    <if test="endTime != null and endTime != ''">
+      <![CDATA[ AND operate_at <= #{endTime} ]]>
+    </if>
+    <if test="req_url != null and req_url != ''">
+      AND url = #{req_url}
+    </if>
+    </where>
+  </select>
+
+
+</mapper>

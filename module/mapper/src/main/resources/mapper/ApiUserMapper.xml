@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.ApiUserMapper">
+  <resultMap id="BaseResultMap" type="com.jsmscp.dr.entity.ApiUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="party_id" jdbcType="INTEGER" property="partyId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_name, nick_name, password, status, party_id, role_id, create_at, update_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from api_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from api_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jsmscp.dr.entity.ApiUser">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into api_user (user_name, nick_name, password, 
+      status, party_id, role_id, 
+      create_at, update_at)
+    values (#{userName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{partyId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, 
+      #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jsmscp.dr.entity.ApiUser">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into api_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="partyId != null">
+        party_id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="partyId != null">
+        #{partyId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jsmscp.dr.entity.ApiUser">
+    update api_user
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="partyId != null">
+        party_id = #{partyId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jsmscp.dr.entity.ApiUser">
+    update api_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      party_id = #{partyId,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=INTEGER},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="list" resultMap="BaseResultMap">
+    SELECT
+      user_name,
+      nick_name,
+      pp.`name` party_name,
+      pp.`code` party_code,
+      pp.short_name,
+      sr.`name` role_name,
+      sr.`code` role_code
+
+      FROM
+       api_user au
+      JOIN pharmacy_party pp on au.party_id = pp.id
+      JOIN sys_role sr on au.role_id = sr.id
+    <where>
+      <if test="keyword !=null and keyword != ''">
+        <bind name="keywords" value="'%' + keyword + '%'" />
+        (user_name LIKE #{keywords} OR  user_code LIKE #{keywords})
+      </if>
+      <if test="partyId != null">
+        AND  pp.id = #{partyId}
+      </if>
+      <if test="roleId != null">
+        AND  sr.id = #{roleId}
+      </if>
+    </where>
+    ORDER BY id
+    LIMIT ${pageNo},${pageSize}
+
+  </select>
+  <select id="findCount" resultType="java.lang.Integer" >
+    SELECT
+    count(*)
+    FROM
+    api_user au
+    JOIN pharmacy_party pp on au.party_id = pp.id
+    JOIN sys_role sr on au.role_id = sr.id
+    <where>
+      <if test="keyword !=null and keyword != ''">
+        <bind name="keywords" value="'%' + keyword + '%'" />
+        (user_name LIKE #{keywords} OR  user_code LIKE #{keywords})
+      </if>
+      <if test="partyId != null">
+        AND  pp.id = #{partyId}
+      </if>
+      <if test="roleId != null">
+        AND  sr.id = #{roleId}
+      </if>
+    </where>
+  </select>
+  <select id="getApiUserByName" resultMap="BaseResultMap" >
+    select
+      <include refid="Base_Column_List" />
+    from api_user
+    where user_name = #{userName,jdbcType=VARCHAR} and status = #{isDeleted,jdbcType=TINYINT}
+  </select>
+  <select id="findUserWithoutDeleted" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from api_user
+    where user_name = #{userName,jdbcType=VARCHAR} and status = #{status,jdbcType=TINYINT}
+  </select>
+<select id="findMenuByUserId" resultType="com.jsmscp.dr.entity.SysMenu">
+  SELECT
+    m.`name`, m.num, m.parent_id, m.icon, m.url, m.`code`, m.id
+    FROM
+    api_role_user_relation r
+    JOIN api_role_menu_relation rm ON r.role_id = rm.role_id
+    JOIN sys_menu m ON rm.menu_id = m.id
+    WHERE
+    r.user_id = #{id} AND m.is_deleted = #{isDeleted}
+    order by m.num asc
+</select>
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from api_user
+    where user_name = #{userName,jdbcType=VARCHAR}
+    and is_deleted = 0
+  </select>
+
+
+</mapper>

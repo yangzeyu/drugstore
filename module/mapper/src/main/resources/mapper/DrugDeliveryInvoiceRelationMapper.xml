@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.DrugDeliveryInvoiceRelationMapper">
+  <resultMap id="BaseResultMap" type="com.jsmscp.dr.entity.DrugDeliveryInvoiceRelation">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="invoice_id" jdbcType="BIGINT" property="invoiceId" />
+    <result column="delivery_id" jdbcType="BIGINT" property="deliveryId" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, invoice_id, delivery_id, create_at, update_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_delivery_invoice_relation
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from drug_delivery_invoice_relation
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jsmscp.dr.entity.DrugDeliveryInvoiceRelation">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_delivery_invoice_relation (invoice_id, delivery_id, create_at, 
+      update_at)
+    values (#{invoiceId,jdbcType=BIGINT}, #{deliveryId,jdbcType=BIGINT}, #{createAt,jdbcType=TIMESTAMP}, 
+      #{updateAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jsmscp.dr.entity.DrugDeliveryInvoiceRelation">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_delivery_invoice_relation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="invoiceId != null">
+        invoice_id,
+      </if>
+      <if test="deliveryId != null">
+        delivery_id,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="invoiceId != null">
+        #{invoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="deliveryId != null">
+        #{deliveryId,jdbcType=BIGINT},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jsmscp.dr.entity.DrugDeliveryInvoiceRelation">
+    update drug_delivery_invoice_relation
+    <set>
+      <if test="invoiceId != null">
+        invoice_id = #{invoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="deliveryId != null">
+        delivery_id = #{deliveryId,jdbcType=BIGINT},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jsmscp.dr.entity.DrugDeliveryInvoiceRelation">
+    update drug_delivery_invoice_relation
+    set invoice_id = #{invoiceId,jdbcType=BIGINT},
+      delivery_id = #{deliveryId,jdbcType=BIGINT},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findDeliverInvoice" resultType="com.jsmscp.dr.dto.DeliverInvoiceDto">
+    SELECT
+        dd.id delivery_id,
+        dd.store_id,
+        ds. `NAME` store_name,
+        dd.update_at,
+        dd.deliver_code,
+        dd.price deliver_price,
+        dd.deliver_date,
+        di.invoice_code,
+        di.invoice_number,
+        di.invoice_date,
+        di.price invoice_price
+    FROM
+        drug_delivery dd
+    JOIN drug_delivery_invoice_relation ddir ON dd.id = ddir.delivery_id
+    JOIN drug_invoice di ON ddir.invoice_id = di.id
+    JOIN drug_store ds ON dd.store_id = ds.id
+    <where>
+      <if test="keyword != null and keyword != ''">
+        <bind name="keywords" value="'' + keyword + ''"/>
+        (dd.deliver_code LIKE #{keywords} OR  di.invoice_code LIKE #{keywords})
+      </if>
+      <if test="storeId != null">
+        and dd.store_id = #{storeId}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        <![CDATA[ AND di.invoice_date >= #{startTime}]]>
+      </if>
+      <if test="endTime != null and endTime != ''">
+        <![CDATA[ AND di.invoice_date <= #{endTime}]]>
+      </if>
+    </where>
+    ORDER BY dd.id
+    LIMIT ${pageNo},${pageSize}
+  </select>
+
+  <select id="findCount" resultType="java.lang.Integer">
+    SELECT
+    COUNT(*)
+    FROM
+    drug_delivery dd
+    JOIN drug_delivery_invoice_relation ddir ON dd.id = ddir.delivery_id
+    JOIN drug_invoice di ON ddir.invoice_id = di.id
+    JOIN drug_store ds ON dd.store_id = ds.id
+    <where>
+      <if test="keyword != null and keyword != ''">
+        <bind name="keywords" value="'' + keyword + ''"/>
+        (dd.deliver_code LIKE #{keywords} OR  di.invoice_code LIKE #{keywords})
+      </if>
+      <if test="storeId != null">
+        and dd.store_id = #{storeId}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        <![CDATA[ AND di.invoice_date >= #{startTime}]]>
+      </if>
+      <if test="endTime != null and endTime != ''">
+        <![CDATA[ AND di.invoice_date <= #{endTime}]]>
+      </if>
+    </where>
+  </select>
+</mapper>

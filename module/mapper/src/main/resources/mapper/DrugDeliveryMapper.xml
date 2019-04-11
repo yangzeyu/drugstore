@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.DrugDeliveryMapper">
+  <resultMap id="BaseResultMap" type="com.jsmscp.dr.entity.DrugDelivery">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="store_id" jdbcType="BIGINT" property="storeId" />
+    <result column="deliver_code" jdbcType="VARCHAR" property="deliverCode" />
+    <result column="deliver_date" jdbcType="TIMESTAMP" property="deliverDate" />
+    <result column="idcard" jdbcType="VARCHAR" property="idcard" />
+    <result column="trade_name" jdbcType="VARCHAR" property="tradeName" />
+    <result column="out_no" jdbcType="VARCHAR" property="outNo" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, store_id, deliver_code, deliver_date, idcard, trade_name, out_no, type, price,
+    create_at, update_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from drug_delivery
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from drug_delivery
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jsmscp.dr.entity.DrugDelivery">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_delivery (store_id, deliver_code, deliver_date,
+    idcard, trade_name, out_no,
+    type, price, create_at,
+    update_at)
+    values (#{storeId,jdbcType=BIGINT}, #{deliverCode,jdbcType=VARCHAR}, #{deliverDate,jdbcType=TIMESTAMP},
+    #{idcard,jdbcType=VARCHAR}, #{tradeName,jdbcType=VARCHAR}, #{outNo,jdbcType=VARCHAR},
+    #{type,jdbcType=TINYINT}, #{price,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP},
+    #{updateAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jsmscp.dr.entity.DrugDelivery">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_delivery
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="deliverCode != null">
+        deliver_code,
+      </if>
+      <if test="deliverDate != null">
+        deliver_date,
+      </if>
+      <if test="idcard != null">
+        idcard,
+      </if>
+      <if test="tradeName != null">
+        trade_name,
+      </if>
+      <if test="outNo != null">
+        out_no,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="storeId != null">
+        #{storeId,jdbcType=BIGINT},
+      </if>
+      <if test="deliverCode != null">
+        #{deliverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverDate != null">
+        #{deliverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="idcard != null">
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeName != null">
+        #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="outNo != null">
+        #{outNo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jsmscp.dr.entity.DrugDelivery">
+    update drug_delivery
+    <set>
+      <if test="storeId != null">
+        store_id = #{storeId,jdbcType=BIGINT},
+      </if>
+      <if test="deliverCode != null">
+        deliver_code = #{deliverCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverDate != null">
+        deliver_date = #{deliverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="idcard != null">
+        idcard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeName != null">
+        trade_name = #{tradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="outNo != null">
+        out_no = #{outNo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jsmscp.dr.entity.DrugDelivery">
+    update drug_delivery
+    set store_id = #{storeId,jdbcType=BIGINT},
+      deliver_code = #{deliverCode,jdbcType=VARCHAR},
+      deliver_date = #{deliverDate,jdbcType=TIMESTAMP},
+      idcard = #{idcard,jdbcType=VARCHAR},
+      trade_name = #{tradeName,jdbcType=VARCHAR},
+      out_no = #{outNo,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      price = #{price,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findByCode" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from drug_delivery
+    where deliver_code = #{deliverCode,jdbcType=VARCHAR} and store_id = #{storeId,jdbcType=BIGINT}
+  </select>
+  <select id="findDrugDeliver" resultType="com.jsmscp.dr.dto.DrugDeliverDto">
+    select
+    dd.id,
+    ds.`name`,
+    ds.id store_id,
+    dd.deliver_code,
+    dd.deliver_date,
+    dd.price,
+    dd.`type`,
+    di.invoice_number,
+    ds.`name` store_name,
+    ddir.invoice_id,
+    dd.out_no,
+    dd.trade_name,
+    dd.idcard
+    from drug_delivery dd
+    LEFT JOIN drug_store ds on dd.store_id = ds.id
+    LEFT JOIN drug_delivery_item ddi on ddi.deliver_id = dd.id
+    LEFT JOIN drug_delivery_invoice_relation ddir on dd.id = ddir.delivery_id
+    LEFT JOIN drug_invoice di on di.id = ddir.invoice_id
+    LEFT JOIN drug_catalog dc ON ddi.catalog_id = dc.id
+    <where>
+      <if test="deliverCode !=null and deliverCode != ''">
+        deliver_code = #{deliverCode}
+      </if>
+      <if test="storeId != null">
+        and dd.store_id = #{storeId}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        <![CDATA[ AND (dd.deliver_date >= #{startTime} OR dd.create_at >= #{startTime})  ]]>
+      </if>
+      <if test="endTime != null and endTime != ''">
+        <![CDATA[ AND (dd.deliver_date <= #{endTime} OR dd.create_at <= #{endTime}) ]]>
+      </if>
+      <if test="drugName != null and drugName != ''">
+        <bind name="drugNames" value="'%'+ drugName+'%'"/>
+        AND  dc.good_name LIKE #{drugNames}
+      </if>
+      <if test="type != null">
+        AND dd.`type` = #{type}
+      </if>
+    </where>
+    GROUP BY dd.id,
+    ds.`name`,
+    dd.deliver_code,
+    dd.deliver_date,
+    dd.price,
+    dd.`type`,
+    di.invoice_number,
+    ds.`name`,
+    ddir.invoice_id,
+    dd.out_no,
+    dd.trade_name,
+    dd.idcard
+    ORDER BY deliver_date desc
+    LIMIT ${pageNo},${pageSize};
+  </select>
+  <select id="findCount" resultType="java.lang.Integer">
+    SELECT count(*) FROM ( select
+      count(*)
+    from drug_delivery dd
+    LEFT JOIN drug_store ds on dd.store_id = ds.id
+    LEFT JOIN drug_delivery_item ddi on ddi.deliver_id = dd.id
+    LEFT JOIN drug_delivery_invoice_relation ddir on dd.id = ddir.delivery_id
+    LEFT JOIN drug_invoice di on di.id = ddir.invoice_id
+    LEFT JOIN drug_catalog dc ON ddi.catalog_id = dc.id
+    <where>
+      <if test="deliverCode !=null and deliverCode != ''">
+        deliver_code = #{deliverCode}
+      </if>
+      <if test="storeId != null">
+        and dd.store_id = #{storeId}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        <![CDATA[ AND dd.deliver_date >= #{startTime} ]]>
+      </if>
+      <if test="endTime != null and endTime != ''">
+        <![CDATA[ AND dd.deliver_date <= #{endTime} ]]>
+      </if>
+      <if test="drugName != null and drugName != ''">
+        <bind name="drugNames" value="'%'+ drugName+'%'"/>
+        AND  dc.good_name LIKE #{drugNames}
+      </if>
+      <if test="type != null">
+        AND dd.`type` = #{type}
+      </if>
+    </where>
+    GROUP BY dd.id) a
+  </select>
+
+  <select id="findDrugDeliverItem" resultType="com.jsmscp.dr.dto.DrugDeliverItemDto">
+    SELECT
+        dd.id,
+        dd.deliver_code,
+        ds.`name` store_name,
+        ddi.quantity,
+        ddi.spec,
+        ddi.unit,
+        ddi.dosage_form,
+        ddi.unit_price,
+        ddi.drug_id,
+        ddi.drug_code,
+        IFNULL(dc.drug_id,0) is_pair_code,
+        ddi.batch_no,
+        ddi.expire,
+        ddi.mfr,
+        dc.good_name drug_name,
+        dc.drug_code platform_code,
+        dc.manufacture  manufacture_name,
+        dc.store_stock
+    FROM
+        drug_delivery dd
+    JOIN drug_store ds ON dd.store_id = ds.id
+    JOIN drug_delivery_item ddi ON ddi.deliver_id = dd.id
+    JOIN drug_catalog dc on dc.id = ddi.catalog_id
+    WHERE
+      dd.id = #{deliverId}
+    ORDER  BY  ddi.batch_no
+  </select>
+
+  <select id="findDeliverDetail" resultType="com.jsmscp.dr.dto.DrugDeliverItemDto">
+    SELECT
+    dd.id,
+    dd.deliver_code,
+    ds.`name` store_name,
+    ddi.quantity,
+    ddi.spec,
+    ddi.unit,
+    ddi.unit_price,
+    ddi.dosage_form,
+    ddi.batch_no,
+    ddi.expire,
+    ddi.mfr,
+    dc.good_name drug_name,
+    dc.drug_code platform_code
+    FROM
+    drug_delivery dd
+    JOIN drug_store ds ON dd.store_id = ds.id
+    JOIN drug_delivery_item ddi ON ddi.deliver_id = dd.id
+    JOIN drug_catalog dc ON ddi.catalog_id = dc.id
+    WHERE
+    dd.id = #{deliverId}
+    ORDER  BY  ddi.batch_no
+  </select>
+
+  <select id="findByDeliverCode" resultType="com.jsmscp.dr.dto.DrugDeliverItemDto" >
+    SELECT
+        drug_code,
+        ddi.`name` drug_name,
+        dd.deliver_code,
+        quantity,
+        spec,
+        dosage_form,
+        unit,
+        batch_no,
+        mfr,
+        ds.`name` store_name
+    FROM
+        drug_delivery_item ddi
+    JOIN drug_delivery dd ON ddi.deliver_id = dd.id
+    JOIN drug_store ds ON  dd.store_id = ds.id
+    WHERE
+        dd.deliver_code = #{deliverCode}
+  </select>
+  <select id="findNoDrugId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from drug_delivery
+    where
+    store_id = #{storeId}
+  </select>
+  <update id="compareDrug">
+    update drug_delivery_item
+    set
+    drug_id = #{drugId,jdbcType=BIGINT}
+    where deliver_id = #{id}
+    AND drug_code = #{drugCode}
+  </update>
+
+
+  <select id="findByDrugId" resultMap="BaseResultMap">
+    SELECT
+    dd.id
+    from drug_delivery dd
+    JOIN drug_delivery_item ddi ON dd.id = ddi.deliver_id
+    WHERE store_id = #{storeId}
+    AND  ddi.drug_code = #{drugCode}
+  </select>
+
+  <update id="delDrug">
+    update drug_delivery_item
+    SET drug_id = NULL
+    where deliver_id = #{deliverId}
+    AND drug_code = #{drugCode}
+  </update>
+
+  <select id="findIsPairCode" resultType="com.jsmscp.dr.dto.DrugDeliverDto">
+    SELECT
+      dd.id,
+      IFNULL(dc.drug_id,0) is_pair_code
+    from drug_delivery dd
+    JOIN drug_delivery_item ddi ON dd.id = ddi.deliver_id
+    JOIN drug_catalog dc ON ddi.catalog_id = dc.id
+    <where>
+      dd.id in
+      <if test="deliverIds != null and deliverIds.size > 0">
+        <foreach collection="deliverIds" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+    GROUP BY dd.id,
+    is_pair_code
+  </select>
+
+
+
+  <!--入库导出信息-->
+  <select id="exportDrugDeliver" resultType="com.jsmscp.dr.dto.DrugDeliverDto">
+    select
+    dd.id,
+    ds.`name`,
+    ds.id store_id,
+    dd.deliver_code,
+    dd.deliver_date,
+    dd.price,
+    dd.`type`,
+    di.invoice_number,
+    ds.`name` store_name,
+    ddir.invoice_id,
+    dd.out_no,
+    dd.trade_name,
+    dd.idcard
+    from drug_delivery dd
+    LEFT JOIN drug_store ds on dd.store_id = ds.id
+    LEFT JOIN drug_delivery_item ddi on ddi.deliver_id = dd.id
+    LEFT JOIN drug_delivery_invoice_relation ddir on dd.id = ddir.delivery_id
+    LEFT JOIN drug_invoice di on di.id = ddir.invoice_id
+    LEFT JOIN drug_catalog dc ON ddi.catalog_id = dc.id
+    <where>
+      <if test="deliverCode !=null and deliverCode != ''">
+        deliver_code = #{deliverCode}
+      </if>
+      <if test="storeId != null">
+        and dd.store_id = #{storeId}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        <![CDATA[ AND (dd.deliver_date >= #{startTime} OR dd.create_at >= #{startTime})  ]]>
+      </if>
+      <if test="endTime != null and endTime != ''">
+        <![CDATA[ AND (dd.deliver_date <= #{endTime} OR dd.create_at <= #{endTime}) ]]>
+      </if>
+      <if test="drugName != null and drugName != ''">
+        <bind name="drugNames" value="'%'+ drugName+'%'"/>
+        AND  dc.good_name LIKE #{drugNames}
+      </if>
+      <if test="type != null">
+        AND dd.`type` = #{type}
+      </if>
+    </where>
+    GROUP BY dd.id,
+    ds.`name`,
+    dd.deliver_code,
+    dd.deliver_date,
+    dd.price,
+    dd.`type`,
+    di.invoice_number,
+    ds.`name`,
+    ddir.invoice_id,
+    dd.out_no,
+    dd.trade_name,
+    dd.idcard
+    ORDER BY deliver_date desc
+  </select>
+
+
+  <select id="findByStoreId" resultType="com.jsmscp.dr.dto.DrugDeliverDto">
+    SELECT
+	  catalog_id,
+	  quantity
+    FROM
+        drug_delivery dd
+    JOIN drug_delivery_item ddi ON dd.id = ddi.deliver_id
+    WHERE
+        dd.store_id = #{storeId}
+  </select>
+
+  <select id="findUploadPrice" resultType="com.jsmscp.dr.dto.UploadPriceDto">
+    SELECT
+      a.delivery_price,
+      b.stock_out_price,
+      b.insurance_price
+    FROM
+        (
+            SELECT
+                SUM(
+                    CONVERT (price, DECIMAL(20, 2))
+                ) delivery_price,
+                store_id
+            FROM
+                drug_delivery
+    <where>
+      <if test="storeId != null">
+        store_id = #{storeId}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        <![CDATA[ AND update_at >= #{startTime}]]>
+      </if>
+      <if test="endTime != null and endTime != ''">
+        <![CDATA[ AND update_at <= #{endTime}]]>
+      </if>
+    </where>
+        ) a
+    JOIN (
+        SELECT
+            SUM(
+                CONVERT (price, DECIMAL(20, 2))
+            ) stock_out_price,
+            SUM(
+                CONVERT (insurance_price, DECIMAL(20, 2))
+            ) insurance_price,
+            store_id
+        FROM
+            drug_stock_out
+    <where>
+      <if test="storeId != null">
+        store_id = #{storeId}
+      </if>
+      <if test="startTime != null and startTime != ''">
+        <![CDATA[ AND update_at >= #{startTime}]]>
+      </if>
+      <if test="endTime != null and endTime != ''">
+        <![CDATA[ AND update_at <= #{endTime}]]>
+      </if>
+    </where>
+    ) b ON a.store_id = b.store_id
+
+  </select>
+
+
+</mapper>

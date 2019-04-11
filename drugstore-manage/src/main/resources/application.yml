@@ -1,0 +1,34 @@
+#datasource
+spring:
+  profiles:
+    active: tst
+  output:
+    ansi:
+      enabled: detect
+  freemarker:
+    request-context-attribute: ctx
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  mail:
+    host: smtp.163.com
+    username: fcsybj@163.com
+    password: fcsybj163
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            enable: true
+          socketFatory:
+            class: javax.net.ssl.SSLSocketFactory
+
+mybatis:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+

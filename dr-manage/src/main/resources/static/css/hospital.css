@@ -1,0 +1,43 @@
+.inline-block {
+    display: inline-block;
+}
+
+.width-fifty {
+    width: 50%;
+}
+
+.main-web-page {
+    min-height: 66vh;
+}
+
+.font-size-big {
+    font-size: 1.1em;
+}
+
+.top-20 {
+    top: 20%;
+}
+
+@media screen and (max-width: 1366px) {
+    #yy_search_activeStatus {
+        width: 50%
+    }
+}
+
+@media screen and (min-width: 1366px) {
+    #yy_search_activeStatus {
+        width: 40%
+    }
+}
+
+.divBG {
+    background-color: grey;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    filter: alpha(opacity=60);
+    opacity: 0.7 !important;
+}

@@ -1,0 +1,32 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.14.RELEASE'
+
+	}
+	repositories {
+		// mavenCentral()
+		maven {url = 'http://192.168.1.205:8081/nexus/content/groups/public/'}
+//        maven {url = 'http://mirrors.163.com/maven/repository/maven-public/'}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+	apply plugin: 'org.springframework.boot'
+
+	group = 'com.jsmscp'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = 1.8
+
+	repositories {
+		// mavenCentral()
+		maven {url = 'http://192.168.1.205:8081/nexus/content/groups/public/'}
+//        maven {url = 'http://mirrors.163.com/maven/repository/maven-public/'}
+	}
+
+}

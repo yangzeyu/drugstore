@@ -1,0 +1,1 @@
+<footer class="footer text-center" style="user-select: none;"> 2018 &copy; Yoee Supply Chain Management </footer>

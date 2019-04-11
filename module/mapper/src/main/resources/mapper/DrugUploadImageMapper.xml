@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.DrugUploadImageMapper">
+  <resultMap id="BaseResultMap" type="com.jsmscp.dr.entity.DrugUploadImage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="item_id" jdbcType="BIGINT" property="itemId" />
+    <result column="image_code" jdbcType="VARCHAR" property="imageCode" />
+    <result column="image_addr" jdbcType="VARCHAR" property="imageAddr" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `type`, item_id, image_code, image_addr, create_at, update_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug_upload_image
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from drug_upload_image
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jsmscp.dr.entity.DrugUploadImage">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_upload_image (`type`, item_id, image_code,
+      image_addr, create_at, update_at
+      )
+    values (#{type,jdbcType=TINYINT}, #{itemId,jdbcType=BIGINT}, #{imageCode,jdbcType=VARCHAR},
+      #{imageAddr,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jsmscp.dr.entity.DrugUploadImage">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_upload_image
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="itemId != null">
+        item_id,
+      </if>
+      <if test="imageCode != null">
+        image_code,
+      </if>
+      <if test="imageAddr != null">
+        image_addr,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="itemId != null">
+        #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test="imageCode != null">
+        #{imageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="imageAddr != null">
+        #{imageAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jsmscp.dr.entity.DrugUploadImage">
+    update drug_upload_image
+    <set>
+      <if test="type != null">
+        `type` = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="itemId != null">
+        item_id = #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test="imageCode != null">
+        image_code = #{imageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="imageAddr != null">
+        image_addr = #{imageAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jsmscp.dr.entity.DrugUploadImage">
+    update drug_upload_image
+    set `type` = #{type,jdbcType=TINYINT},
+      item_id = #{itemId,jdbcType=BIGINT},
+      image_code = #{imageCode,jdbcType=VARCHAR},
+      image_addr = #{imageAddr,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="findInvoiceImg" resultType="java.lang.String">
+    SELECT
+    image_addr
+    from drug_upload_image  dui
+    JOIN drug_delivery_item ddi ON dui.item_id = ddi.id
+    JOIN drug_delivery dd  ON ddi.deliver_id = dd.id
+    <where>
+      <if test="deliveryId != null">
+        dd.id = #{deliveryId}
+      </if>
+    </where>
+  </select>
+  <select id="findDeliverImg" resultType="java.lang.String">
+    select
+    image_addr
+    FROM drug_upload_image dui
+    JOIN drug_invoice di ON di.id = dui.item_id
+    JOIN drug_delivery_invoice_relation ddir ON di.id = ddir.invoice_id
+    <where>
+      <if test="deliveryId != null">
+        ddir.id = #{deliveryId}
+      </if>
+    </where>
+  </select>
+
+  <select id="findAllItemId" resultType="java.lang.Long">
+    SELECT item_id FROM  drug_upload_image
+  </select>
+
+</mapper>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.MedicalInsuranceMapper">
+  <resultMap id="BaseResultMap" type="com.jsmscp.dr.entity.MedicalInsurance">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="medical_insurance_code" jdbcType="VARCHAR" property="medicalInsuranceCode" />
+    <result column="three_directory_name" jdbcType="VARCHAR" property="threeDirectoryName" />
+    <result column="three_directory_type" jdbcType="VARCHAR" property="threeDirectoryType" />
+    <result column="collect_type" jdbcType="TINYINT" property="collectType" />
+    <result column="collect_lvl" jdbcType="VARCHAR" property="collectLvl" />
+    <result column="dosage_form" jdbcType="VARCHAR" property="dosageForm" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="spec" jdbcType="VARCHAR" property="spec" />
+    <result column="ext" jdbcType="VARCHAR" property="ext" />
+    <result column="ext1" jdbcType="VARCHAR" property="ext1" />
+    <result column="ext2" jdbcType="VARCHAR" property="ext2" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, medical_insurance_code, three_directory_name, three_directory_type, collect_type,
+    collect_lvl, dosage_form, status, spec, ext, ext1, ext2, create_at, update_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from medical_insurance
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from medical_insurance
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jsmscp.dr.entity.MedicalInsurance">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into medical_insurance (medical_insurance_code, three_directory_name,
+    three_directory_type, collect_type, collect_lvl,
+    dosage_form, status, spec,
+    ext, ext1, ext2, create_at,
+    update_at)
+    values (#{medicalInsuranceCode,jdbcType=VARCHAR}, #{threeDirectoryName,jdbcType=VARCHAR},
+    #{threeDirectoryType,jdbcType=VARCHAR}, #{collectType,jdbcType=TINYINT}, #{collectLvl,jdbcType=VARCHAR},
+    #{dosageForm,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{spec,jdbcType=VARCHAR},
+    #{ext,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP},
+    #{updateAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jsmscp.dr.entity.MedicalInsurance">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into medical_insurance
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="medicalInsuranceCode != null">
+        medical_insurance_code,
+      </if>
+      <if test="threeDirectoryName != null">
+        three_directory_name,
+      </if>
+      <if test="threeDirectoryType != null">
+        three_directory_type,
+      </if>
+      <if test="collectType != null">
+        collect_type,
+      </if>
+      <if test="collectLvl != null">
+        collect_lvl,
+      </if>
+      <if test="dosageForm != null">
+        dosage_form,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="spec != null">
+        spec,
+      </if>
+      <if test="ext != null">
+        ext,
+      </if>
+      <if test="ext1 != null">
+        ext1,
+      </if>
+      <if test="ext2 != null">
+        ext2,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="medicalInsuranceCode != null">
+        #{medicalInsuranceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="threeDirectoryName != null">
+        #{threeDirectoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="threeDirectoryType != null">
+        #{threeDirectoryType,jdbcType=VARCHAR},
+      </if>
+      <if test="collectType != null">
+        #{collectType,jdbcType=TINYINT},
+      </if>
+      <if test="collectLvl != null">
+        #{collectLvl,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="spec != null">
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="ext != null">
+        #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null">
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null">
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jsmscp.dr.entity.MedicalInsurance">
+    update medical_insurance
+    <set>
+      <if test="medicalInsuranceCode != null">
+        medical_insurance_code = #{medicalInsuranceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="threeDirectoryName != null">
+        three_directory_name = #{threeDirectoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="threeDirectoryType != null">
+        three_directory_type = #{threeDirectoryType,jdbcType=VARCHAR},
+      </if>
+      <if test="collectType != null">
+        collect_type = #{collectType,jdbcType=TINYINT},
+      </if>
+      <if test="collectLvl != null">
+        collect_lvl = #{collectLvl,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        dosage_form = #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="spec != null">
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="ext != null">
+        ext = #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null">
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null">
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jsmscp.dr.entity.MedicalInsurance">
+    update medical_insurance
+    set medical_insurance_code = #{medicalInsuranceCode,jdbcType=VARCHAR},
+      three_directory_name = #{threeDirectoryName,jdbcType=VARCHAR},
+      three_directory_type = #{threeDirectoryType,jdbcType=VARCHAR},
+      collect_type = #{collectType,jdbcType=TINYINT},
+      collect_lvl = #{collectLvl,jdbcType=VARCHAR},
+      dosage_form = #{dosageForm,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      spec = #{spec,jdbcType=VARCHAR},
+      ext = #{ext,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!--查询医保信息-->
+    <select id="findMedicalInsurance" resultType="com.jsmscp.dr.entity.MedicalInsurance">
+        SELECT
+      <include refid="Base_Column_List"/>
+        FROM medical_insurance
+      <where>
+          <if test="keyword != null and keyword !=''">
+              <bind name="keywords" value="'%'+keyword +'%'"/>
+                (medical_insurance_code LIKE #{keywords}
+                  OR three_directory_name LIKE #{keywords})
+          </if>
+          <if test="collectType != null and collectType != ''">
+              and collect_type = #{collectType}
+          </if>
+          <if test="collectLvl != null and collectLvl != ''">
+              and collect_lvl = #{collectLvl}
+          </if>
+      </where>
+      LIMIT ${pageNo},${pageSize}
+    </select>
+
+  <!--查询医保信息等级-->
+    <select id="findAllGrade" resultMap="BaseResultMap">
+        SELECT DISTINCT
+        collect_lvl
+        FROM medical_insurance
+    </select>
+
+  <!--查询医保信息数量-->
+    <select id="findMedicalInsuranceCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM medical_insurance mi LEFT JOIN drug_base db on mi.id = db.insurance_id
+      <where>
+          <if test="keyword != null and keyword !=''">
+              <bind name="keywords" value="'%'+keyword +'%'"/>
+                (mi.medical_insurance_code LIKE #{keywords}
+                  OR mi.three_directory_name LIKE #{keywords})
+          </if>
+          <if test="collectType != null and collectType != ''" >
+              and mi.collect_type = #{collectType}
+          </if>
+          <if test="collectLvl != null and collectLvl != ''">
+              and mi.collect_lvl = #{collectLvl}
+          </if>
+      </where>
+    </select>
+  <select id="findByCode" resultType="java.lang.Integer">
+    select count(*)
+    from medical_insurance
+    where medical_insurance_code = #{medicalInsuranceCode}
+  </select>
+  <select id="findAllInsurance" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM medical_insurance
+  </select>
+
+
+  <!-- 查询所有的医保目录-->
+    <select id="findAllMedicalInsuranceCode" resultMap="BaseResultMap">
+        SELECT
+      <include refid="Base_Column_List"/>
+        FROM medical_insurance
+      <where>
+        <if test="keyword != null">
+          <bind name="keywords" value="'%'+keyword +'%'"/>
+          medical_insurance_code LIKE #{keywords}
+        </if>
+      </where>
+    </select>
+
+  <select id="findInsuranceCompare" resultType="com.jsmscp.dr.entity.MedicalInsurance">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM medical_insurance
+    <where>
+      <if test="keyword != null and keyword !=''">
+        medical_insurance_code = #{keyword}
+      </if>
+      <if test="collectType != null and collectType != ''">
+        and collect_type = #{collectType}
+      </if>
+      <if test="collectLvl != null and collectLvl != ''">
+        and collect_lvl = #{collectLvl}
+      </if>
+    </where>
+  </select>
+
+
+  <!--查询医保目录信息（下拉框）-->
+  <select id="findAllInsuranceByKey" resultType="com.jsmscp.dr.entity.MedicalInsurance">
+    SELECT
+    medical_insurance_code,three_directory_name
+    FROM medical_insurance
+    WHERE
+    <bind name="keywords" value="'%'+keyword +'%'"/>
+    medical_insurance_code LIKE #{keywords}
+    OR three_directory_name LIKE #{keywords}
+    LIMIT #{zeroSize}, #{dropDownListSize}
+  </select>
+</mapper>

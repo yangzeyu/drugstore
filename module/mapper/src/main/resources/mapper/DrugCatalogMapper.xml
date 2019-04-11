@@ -1,0 +1,939 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.DrugCatalogMapper">
+    <resultMap id="BaseResultMap" type="com.jsmscp.dr.entity.DrugCatalog">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="drug_code" jdbcType="VARCHAR" property="drugCode" />
+        <result column="drug_id" jdbcType="BIGINT" property="drugId" />
+        <result column="store_id" jdbcType="INTEGER" property="storeId" />
+        <result column="unit" jdbcType="VARCHAR" property="unit" />
+        <result column="good_name" jdbcType="VARCHAR" property="goodName" />
+        <result column="manufacture" jdbcType="VARCHAR" property="manufacture" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="stand_spec_rate" jdbcType="VARCHAR" property="standSpecRate" />
+        <result column="dosage_form" jdbcType="VARCHAR" property="dosageForm" />
+        <result column="conversion_ratio" jdbcType="INTEGER" property="conversionRatio" />
+        <result column="is_emergent" jdbcType="TINYINT" property="isEmergent" />
+        <result column="spec" jdbcType="VARCHAR" property="spec" />
+        <result column="once_number" jdbcType="VARCHAR" property="onceNumber" />
+        <result column="insurance_id" jdbcType="BIGINT" property="insuranceId" />
+        <result column="once_unit" jdbcType="VARCHAR" property="onceUnit" />
+        <result column="freq_code" jdbcType="VARCHAR" property="freqCode" />
+        <result column="freq_name" jdbcType="VARCHAR" property="freqName" />
+        <result column="max_once_number" jdbcType="INTEGER" property="maxOnceNumber" />
+        <result column="direction" jdbcType="VARCHAR" property="direction" />
+        <result column="lower_limit" jdbcType="INTEGER" property="lowerLimit" />
+        <result column="upper_limit" jdbcType="INTEGER" property="upperLimit" />
+        <result column="init_stock" jdbcType="DECIMAL" property="initStock" />
+        <result column="store_stock" jdbcType="DECIMAL" property="storeStock" />
+        <result column="stock" jdbcType="DECIMAL" property="stock" />
+        <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, drug_code, drug_id, store_id, unit, good_name, manufacture, status, stand_spec_rate,
+        dosage_form, conversion_ratio, is_emergent, spec, once_number, insurance_id, once_unit,
+        freq_code, freq_name, max_once_number, direction, lower_limit, upper_limit, init_stock,
+        store_stock, stock, create_at, update_at
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from drug_catalog
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from drug_catalog
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.jsmscp.dr.entity.DrugCatalog">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into drug_catalog (drug_code, drug_id, store_id,
+        unit, good_name, manufacture,
+        status, stand_spec_rate, dosage_form,
+        conversion_ratio, is_emergent, spec,
+        once_number, insurance_id, once_unit,
+        freq_code, freq_name, max_once_number,
+        direction, lower_limit, upper_limit,
+        init_stock, store_stock, stock,
+        create_at, update_at)
+        values (#{drugCode,jdbcType=VARCHAR}, #{drugId,jdbcType=BIGINT}, #{storeId,jdbcType=INTEGER},
+        #{unit,jdbcType=VARCHAR}, #{goodName,jdbcType=VARCHAR}, #{manufacture,jdbcType=VARCHAR},
+        #{status,jdbcType=TINYINT}, #{standSpecRate,jdbcType=VARCHAR}, #{dosageForm,jdbcType=VARCHAR},
+        #{conversionRatio,jdbcType=INTEGER}, #{isEmergent,jdbcType=TINYINT}, #{spec,jdbcType=VARCHAR},
+        #{onceNumber,jdbcType=VARCHAR}, #{insuranceId,jdbcType=BIGINT}, #{onceUnit,jdbcType=VARCHAR},
+        #{freqCode,jdbcType=VARCHAR}, #{freqName,jdbcType=VARCHAR}, #{maxOnceNumber,jdbcType=INTEGER},
+        #{direction,jdbcType=VARCHAR}, #{lowerLimit,jdbcType=INTEGER}, #{upperLimit,jdbcType=INTEGER},
+        #{initStock,jdbcType=DECIMAL}, #{storeStock,jdbcType=DECIMAL}, #{stock,jdbcType=DECIMAL},
+        #{createAt,jdbcType=TIMESTAMP}, #{updateAt,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.jsmscp.dr.entity.DrugCatalog">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into drug_catalog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="drugCode != null">
+                drug_code,
+            </if>
+            <if test="drugId != null">
+                drug_id,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="unit != null">
+                unit,
+            </if>
+            <if test="goodName != null">
+                good_name,
+            </if>
+            <if test="manufacture != null">
+                manufacture,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="standSpecRate != null">
+                stand_spec_rate,
+            </if>
+            <if test="dosageForm != null">
+                dosage_form,
+            </if>
+            <if test="conversionRatio != null">
+                conversion_ratio,
+            </if>
+            <if test="isEmergent != null">
+                is_emergent,
+            </if>
+            <if test="spec != null">
+                spec,
+            </if>
+            <if test="onceNumber != null">
+                once_number,
+            </if>
+            <if test="insuranceId != null">
+                insurance_id,
+            </if>
+            <if test="onceUnit != null">
+                once_unit,
+            </if>
+            <if test="freqCode != null">
+                freq_code,
+            </if>
+            <if test="freqName != null">
+                freq_name,
+            </if>
+            <if test="maxOnceNumber != null">
+                max_once_number,
+            </if>
+            <if test="direction != null">
+                direction,
+            </if>
+            <if test="lowerLimit != null">
+                lower_limit,
+            </if>
+            <if test="upperLimit != null">
+                upper_limit,
+            </if>
+            <if test="initStock != null">
+                init_stock,
+            </if>
+            <if test="storeStock != null">
+                store_stock,
+            </if>
+            <if test="stock != null">
+                stock,
+            </if>
+            <if test="createAt != null">
+                create_at,
+            </if>
+            <if test="updateAt != null">
+                update_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="drugCode != null">
+                #{drugCode,jdbcType=VARCHAR},
+            </if>
+            <if test="drugId != null">
+                #{drugId,jdbcType=BIGINT},
+            </if>
+            <if test="storeId != null">
+                #{storeId,jdbcType=INTEGER},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="goodName != null">
+                #{goodName,jdbcType=VARCHAR},
+            </if>
+            <if test="manufacture != null">
+                #{manufacture,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="standSpecRate != null">
+                #{standSpecRate,jdbcType=VARCHAR},
+            </if>
+            <if test="dosageForm != null">
+                #{dosageForm,jdbcType=VARCHAR},
+            </if>
+            <if test="conversionRatio != null">
+                #{conversionRatio,jdbcType=INTEGER},
+            </if>
+            <if test="isEmergent != null">
+                #{isEmergent,jdbcType=TINYINT},
+            </if>
+            <if test="spec != null">
+                #{spec,jdbcType=VARCHAR},
+            </if>
+            <if test="onceNumber != null">
+                #{onceNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="insuranceId != null">
+                #{insuranceId,jdbcType=BIGINT},
+            </if>
+            <if test="onceUnit != null">
+                #{onceUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="freqCode != null">
+                #{freqCode,jdbcType=VARCHAR},
+            </if>
+            <if test="freqName != null">
+                #{freqName,jdbcType=VARCHAR},
+            </if>
+            <if test="maxOnceNumber != null">
+                #{maxOnceNumber,jdbcType=INTEGER},
+            </if>
+            <if test="direction != null">
+                #{direction,jdbcType=VARCHAR},
+            </if>
+            <if test="lowerLimit != null">
+                #{lowerLimit,jdbcType=INTEGER},
+            </if>
+            <if test="upperLimit != null">
+                #{upperLimit,jdbcType=INTEGER},
+            </if>
+            <if test="initStock != null">
+                #{initStock,jdbcType=DECIMAL},
+            </if>
+            <if test="storeStock != null">
+                #{storeStock,jdbcType=DECIMAL},
+            </if>
+            <if test="stock != null">
+                #{stock,jdbcType=DECIMAL},
+            </if>
+            <if test="createAt != null">
+                #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateAt != null">
+                #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jsmscp.dr.entity.DrugCatalog">
+        update drug_catalog
+        <set>
+            <if test="drugCode != null">
+                drug_code = #{drugCode,jdbcType=VARCHAR},
+            </if>
+            <if test="drugId != null">
+                drug_id = #{drugId,jdbcType=BIGINT},
+            </if>
+            <if test="storeId != null">
+                store_id = #{storeId,jdbcType=INTEGER},
+            </if>
+            <if test="unit != null">
+                unit = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="goodName != null">
+                good_name = #{goodName,jdbcType=VARCHAR},
+            </if>
+            <if test="manufacture != null">
+                manufacture = #{manufacture,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="standSpecRate != null">
+                stand_spec_rate = #{standSpecRate,jdbcType=VARCHAR},
+            </if>
+            <if test="dosageForm != null">
+                dosage_form = #{dosageForm,jdbcType=VARCHAR},
+            </if>
+            <if test="conversionRatio != null">
+                conversion_ratio = #{conversionRatio,jdbcType=INTEGER},
+            </if>
+            <if test="isEmergent != null">
+                is_emergent = #{isEmergent,jdbcType=TINYINT},
+            </if>
+            <if test="spec != null">
+                spec = #{spec,jdbcType=VARCHAR},
+            </if>
+            <if test="onceNumber != null">
+                once_number = #{onceNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="insuranceId != null">
+                insurance_id = #{insuranceId,jdbcType=BIGINT},
+            </if>
+            <if test="onceUnit != null">
+                once_unit = #{onceUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="freqCode != null">
+                freq_code = #{freqCode,jdbcType=VARCHAR},
+            </if>
+            <if test="freqName != null">
+                freq_name = #{freqName,jdbcType=VARCHAR},
+            </if>
+            <if test="maxOnceNumber != null">
+                max_once_number = #{maxOnceNumber,jdbcType=INTEGER},
+            </if>
+            <if test="direction != null">
+                direction = #{direction,jdbcType=VARCHAR},
+            </if>
+            <if test="lowerLimit != null">
+                lower_limit = #{lowerLimit,jdbcType=INTEGER},
+            </if>
+            <if test="upperLimit != null">
+                upper_limit = #{upperLimit,jdbcType=INTEGER},
+            </if>
+            <if test="initStock != null">
+                init_stock = #{initStock,jdbcType=DECIMAL},
+            </if>
+            <if test="storeStock != null">
+                store_stock = #{storeStock,jdbcType=DECIMAL},
+            </if>
+            <if test="stock != null">
+                stock = #{stock,jdbcType=DECIMAL},
+            </if>
+            <if test="createAt != null">
+                create_at = #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateAt != null">
+                update_at = #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jsmscp.dr.entity.DrugCatalog">
+    update drug_catalog
+    set drug_code = #{drugCode,jdbcType=VARCHAR},
+      drug_id = #{drugId,jdbcType=BIGINT},
+      store_id = #{storeId,jdbcType=INTEGER},
+      unit = #{unit,jdbcType=VARCHAR},
+      good_name = #{goodName,jdbcType=VARCHAR},
+      manufacture = #{manufacture,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      stand_spec_rate = #{standSpecRate,jdbcType=VARCHAR},
+      dosage_form = #{dosageForm,jdbcType=VARCHAR},
+      conversion_ratio = #{conversionRatio,jdbcType=INTEGER},
+      is_emergent = #{isEmergent,jdbcType=TINYINT},
+      spec = #{spec,jdbcType=VARCHAR},
+      once_number = #{onceNumber,jdbcType=VARCHAR},
+      insurance_id = #{insuranceId,jdbcType=BIGINT},
+      once_unit = #{onceUnit,jdbcType=VARCHAR},
+      freq_code = #{freqCode,jdbcType=VARCHAR},
+      freq_name = #{freqName,jdbcType=VARCHAR},
+      max_once_number = #{maxOnceNumber,jdbcType=INTEGER},
+      direction = #{direction,jdbcType=VARCHAR},
+      lower_limit = #{lowerLimit,jdbcType=INTEGER},
+      upper_limit = #{upperLimit,jdbcType=INTEGER},
+      init_stock = #{initStock,jdbcType=DECIMAL},
+      store_stock = #{storeStock,jdbcType=DECIMAL},
+      stock = #{stock,jdbcType=DECIMAL},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+
+  <select id="findDrugCatalog" resultType="com.jsmscp.dr.dto.DrugCatalogDto">
+    SELECT
+    dc.id,
+    ds.`name` store_name,
+    IFNULL(db.`name`, dc.good_name) drug_name,
+    dc.good_name,
+    dc.drug_id,
+    dc.unit,
+    dc.spec,
+    dc.dosage_form,
+    db.spec,
+    dc.direction,
+    db.unit_price,
+    dc.`status`,
+    dc.stock,
+    IFNULL(dc.manufacture,m.`name`) manufacture
+    FROM
+    drug_catalog dc LEFT JOIN drug_store ds ON dc.store_id = ds.id
+    LEFT JOIN drug_base db ON dc.drug_id = db.id
+    LEFT JOIN manufacture m ON db.manufacture_id = m.id
+    <where>
+      <if test="keyword != null and keyword != ''">
+        <bind name="keywords" value="'%'+ keyword+'%'"/>
+          (db.`name` LIKE #{keywords}
+          OR db.good_name LIKE #{keywords}
+          OR dc.good_name LIKE #{keywords}
+          OR db.name_pinyin LIKE  #{keywords}
+          OR db.good_name_pinyin LIKE #{keywords}
+          OR db.platform_code LIKE #{keywords})
+      </if>
+      <if test="storeId != null">
+        AND ds.id = #{storeId}
+      </if>
+      <if test="status != null ">
+        AND dc.`status` = #{status}
+      </if>
+    </where>
+    ORDER BY  dc.id DESC
+    LIMIT ${pageNo},${pageSize};
+  </select>
+
+  <select id="findCount" resultType="java.lang.Integer">
+    select
+    count(*)
+    FROM
+    drug_catalog dc LEFT JOIN drug_store ds ON dc.store_id = ds.id
+    LEFT JOIN drug_base db ON dc.drug_id = db.id
+    LEFT JOIN manufacture m ON db.manufacture_id = m.id
+    <where>
+      <if test="keyword != null and keyword != ''">
+        <bind name="keywords" value="'%'+ keyword+'%'"/>
+        (db.`name` LIKE #{keywords}
+        OR db.good_name LIKE #{keywords}
+        OR db.name_pinyin LIKE  #{keywords}
+        OR db.good_name_pinyin LIKE #{keywords}
+        OR db.platform_code = #{keywords})
+      </if>
+      <if test="storeId != null">
+        AND ds.id = #{storeId}
+      </if>
+      <if test="status != null">
+        AND dc.`status` = #{status}
+      </if>
+    </where>
+  </select>
+  <select id="findOne" resultType="com.jsmscp.dr.dto.DrugCatalogDto">
+     SELECT
+    dc.id,
+    dc.`status`,
+    dc.max_once_number,
+    dc.upper_limit,
+    dc.lower_limit
+    FROM
+    drug_catalog dc
+    WHERE
+    dc.id = #{drugCatalogId}
+  </select>
+
+  <select id="findByDrugCode" resultMap="LazyResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from drug_catalog
+    where drug_code = #{drugCode,jdbcType=VARCHAR} and store_id = #{storeId,jdbcType=INTEGER}
+      order by id limit 1
+  </select>
+
+    <resultMap id="LazyResultMap" type="com.jsmscp.dr.entity.DrugCatalog" extends="BaseResultMap">
+        <association column="drug_id" property="drugBase" fetchType="lazy" javaType="com.jsmscp.dr.entity.DrugBase"
+                     select="com.jsmscp.dr.mapper.DrugBaseMapper.findById"/>
+    </resultMap>
+  <select id="findStock" resultType="com.jsmscp.dr.dto.DrugCatalogDto">
+    SELECT
+    dc.id,
+    ds.`name` store_name,
+    dc.good_name drug_name,
+    dc.drug_id,
+    dc.good_name,
+    dc.drug_code,
+    dc.unit,
+    dc.dosage_form,
+    dc.spec,
+    dc.direction,
+    dc.init_stock,
+    dc.store_stock,
+    dc.`status`,
+    IFNULL(dc.store_stock,init_stock) stock,
+    dc.manufacture
+    FROM
+    drug_catalog dc LEFT JOIN drug_store ds ON dc.store_id = ds.id
+
+    <where>
+      <if test="keyword != null and keyword !=''">
+        <bind name="keywords" value="'%'+keyword +'%'"/>
+        (dc.drug_code LIKE #{keywords}
+        OR dc.good_name LIKE #{keywords})
+      </if>
+      <if test="storeId != null">
+        AND dc.store_id = #{storeId}
+      </if>
+    </where>
+    LIMIT ${pageNo},${pageSize};
+  </select>
+  
+  
+  <select id="findDrugStock" resultType="com.jsmscp.dr.dto.DrugCatalogDto">
+      SELECT
+      dc.id,
+      dc.good_name,
+      dc.spec,
+      dc.dosage_form,
+      dc.manufacture,
+      dc.drug_code,
+      dc.unit,
+      dc.drug_id,
+      dc.`status`,
+      dc.conversion_ratio,
+      dc.stock,
+      dc.init_stock,
+      dc.upper_limit,
+      dc.init_stock,
+      dc.lower_limit,
+      dc.store_stock
+      FROM
+      drug_catalog dc
+      LEFT JOIN drug_stock_out_item dsoi ON dsoi.catalog_id = dc.id
+      LEFT JOIN drug_stock_out dso ON dso.id = dsoi.store_out_id
+      LEFT JOIN drug_delivery_item ddi ON ddi.catalog_id = dc.id
+      LEFT JOIN drug_delivery dd ON dd.id = ddi.deliver_id
+      JOIN drug_store ds ON dc.store_id = ds.id
+
+    <where>
+        <if test="storeId != null">
+          dc.store_id = #{storeId}
+        </if>
+        <if test="drugName != null and drugName != ''">
+            <bind name="drugNames" value="'%' + drugName +'%'"/>
+          AND dc.good_name LIKE #{drugNames}
+        </if>
+    </where>
+      GROUP BY dc.id
+      ORDER BY
+      dso.out_date DESC,
+      dd.deliver_date DESC
+      LIMIT ${pageNo},${pageSize};
+  </select>
+
+  <select id="findStockCount" resultType="java.lang.Integer">
+    SELECT
+      count(*)
+    FROM
+      drug_catalog dc
+      JOIN drug_store ds ON dc.store_id = ds.id
+    <where>
+    <if test="storeId != null">
+      dc.store_id = #{storeId}
+    </if>
+    <if test="drugName != null and drugName != ''">
+      <bind name="drugNames" value="'%' + drugName +'%'"/>
+      AND dc.good_name LIKE #{drugNames}
+    </if>
+    </where>
+  </select>
+
+  <select id="findAllNoDrugId" resultType="com.jsmscp.dr.dto.CompareDrugCodeDto">
+    SELECT
+        dc.store_id,
+        ds.`name` store_name,
+        COUNT(*) drug_number,
+        COUNT(dc.is_emergent = #{emergent}) emergent_number
+    FROM
+        drug_catalog dc
+    JOIN drug_store ds ON dc.store_id = ds.id
+    WHERE
+        dc.drug_id IS NULL
+        AND ds.status = #{successStatus}
+    GROUP BY
+        dc.store_id
+  </select>
+
+
+  <select id="findStockInItem" resultType="com.jsmscp.dr.dto.DrugDeliveryDto">
+    SELECT
+        dd.deliver_code,
+        ds.id store_id,
+        ds.`name` store_name,
+        dc.`good_name` drug_name,
+        ddi.drug_code,
+        ddi.quantity,
+        ddi.batch_no,
+        dd.deliver_code,
+        dd.deliver_date,
+        dd.type
+    FROM
+        drug_delivery dd
+    JOIN drug_delivery_item ddi ON ddi.deliver_id = dd.id
+    JOIN drug_store ds ON dd.store_id = ds.id
+    JOIN drug_catalog dc ON dc.id = ddi.catalog_id
+    WHERE
+        dd.store_id = #{storeId}
+      <if test="catalogId != null">
+        AND ddi.catalog_id = #{catalogId}
+      </if>
+    LIMIT ${pageNo},${pageSize}
+  </select>
+
+
+    <select id="findStockOutItem" resultType="com.jsmscp.dr.dto.DrugStockOutDetailDto">
+        SELECT
+        ds.id store_id,
+        dso.out_no,
+        ds.`name` store_name,
+        dc.`good_name` drug_name,
+        dsoi.drug_code,
+        dsoi.quantity,
+        dsoi.batch_no,
+        dso.pay_type,
+        dso.out_date,
+        dso.type
+        FROM
+        drug_stock_out dso
+        JOIN drug_stock_out_item dsoi ON dsoi.store_out_id = dso.id
+        JOIN drug_store ds ON dso.store_id =ds.id
+        JOIN drug_catalog dc ON  dc.id = dsoi.catalog_id
+        WHERE
+        dso.store_id = #{storeId}
+        <if test="catalogId != null">
+            AND dsoi.catalog_id = #{catalogId}
+        </if>
+        LIMIT ${pageNo},${pageSize}
+    </select>
+
+
+    <select id="findDrugStockWarning" resultType="com.jsmscp.dr.dto.DrugDeliveryDto">
+    SELECT
+      db.`name`,
+      dsoi.drug_id,
+      dso.store_id,
+      dsoi.batch_no,
+      dsoi.dosage_form,
+      dsoi.spec,
+      dsoi.unit,
+      dsoi.mfr,
+      SUM(ddi.quantity) in_quantity,
+      SUM(dsoi.quantity) out_quantity,
+      dc.stock,
+      MAX(dsoi.update_at) update_at
+    FROM
+        drug_stock_out_item dsoi
+    JOIN drug_stock_out dso ON dsoi.store_out_id = dso.id
+    JOIN drug_store ds ON dso.store_id = ds.id
+    JOIN drug_base db ON dsoi.drug_id = db.id
+    JOIN drug_delivery_item ddi ON ddi.drug_id = dsoi.drug_id
+    JOIN drug_delivery dd ON ddi.deliver_id = dd.id
+    JOIN drug_catalog dc on dc.store_id = dso.store_id and dc.drug_id = dsoi.drug_id
+    WHERE
+        dsoi.drug_id = #{drugId}
+    AND dso.store_id = #{storeId}
+  </select>
+
+
+  <select id="findDeliverItem" resultType="com.jsmscp.dr.dto.DrugStockInDto">
+    SELECT
+      ds.`name` store_name,
+      dd.deliver_code,
+      ddi.drug_code,
+      db.`name` drug_name,
+      ddi.batch_no,
+      ddi.quantity,
+      di.invoice_code
+    FROM
+    drug_delivery_item ddi
+    JOIN 	drug_delivery dd ON ddi.deliver_id = dd.id
+    JOIN drug_delivery_invoice_relation ddir on ddir.delivery_id = ddi.deliver_id
+    JOIN drug_invoice di ON ddir.invoice_id = di.id
+    JOIN drug_store ds ON dd.store_id = ds.id
+    JOIN drug_base db ON ddi.drug_id = db.id
+    where
+    ddi.drug_id = #{drugId}
+    <if test="batchNo != null and batchNo != ''">
+      AND ddi.batch_no =#{batchNo}
+    </if>
+    AND dd.store_id = #{storeId}
+    ORDER BY ddi.batch_no
+  </select>
+
+  <select id="findInvoiceItem" resultType="com.jsmscp.dr.dto.DrugStockOutDetailDto">
+    SELECT
+      ds.`name`	store_name,
+      db.`name` drug_name,
+      dso.out_no,
+      dsoi.batch_no,
+      dso.out_date,
+      dsoi.drug_code,
+      quantity
+    FROM
+        drug_stock_out dso
+    JOIN drug_stock_out_item dsoi ON dsoi.store_out_id = dso.id
+    JOIN drug_store ds ON dso.store_id = ds.id
+    JOIN drug_base db ON dsoi.drug_id = db.id
+    WHERE
+      dsoi.drug_id = #{drugId}findDrugStock
+    <if test="batchNo != null and batchNo != ''">
+      AND dsoi.batch_no =#{batchNo}
+    </if>
+  AND dso.store_id = #{storeId}
+  ORDER BY
+      batch_no
+  </select>
+  <select id="findByDrugId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+      drug_catalog
+    <where>
+        <if test="goodName != null and goodName !=''">
+            <bind name="goodNames" value="'%'+goodName +'%'"/>
+            (good_name LIKE #{goodNames})
+        </if>
+           and store_id = #{storeId}
+    </where>
+      ORDER  BY is_emergent DESC
+  </select>
+  <select id="findNoDrugIdCount" resultType="java.lang.Integer">
+    SELECT
+    COUNT(*)
+    FROM
+        drug_catalog
+    WHERE
+        drug_id IS NULL
+    AND store_id = #{storeId}
+  </select>
+
+  <update id="compareDrug">
+ update drug_catalog
+    set
+    drug_id = #{drugId},
+    conversion_ratio = #{conversionRatio},
+    insurance_id = #{insuranceId}
+    WHERE
+    drug_code = #{drugCode}
+    AND  store_id = #{storeId}
+  </update>
+
+  <select id="findStockOutMSG" resultType="com.jsmscp.dr.dto.DrugStockMSGDto">
+      select dc.stock,
+      SUM(dsoi.quantity) out_stock
+    from
+    drug_catalog dc JOIN drug_stock_out_item dsoi ON dsoi.drug_id = dc.drug_id
+    JOIN drug_stock_out dso ON dso.id = dsoi.store_out_id
+    WHERE dso.store_id =#{storeId}
+      <if test="batchNo != null and batchNo != ''">
+        AND  dsoi.batch_no = #{batchNo}
+      </if>
+      AND dc.drug_code =#{drugCode}
+    GROUP BY dc.stock
+  </select>
+  <select id="findStockInMSG" resultType="com.jsmscp.dr.dto.DrugStockMSGDto">
+      select dc.stock,
+      SUM(ddi.quantity) in_stock
+    from
+    drug_catalog dc JOIN drug_delivery_item ddi ON dc.drug_code = ddi.drug_code
+    JOIN drug_delivery dd ON ddi.deliver_id = dd.id
+    WHERE dd.store_id =#{storeId}
+      <if test="batchNo != null and batchNo != ''">
+        AND  ddi.batch_no = #{batchNo}
+      </if>
+      AND dc.drug_code =#{drugCode}
+    GROUP BY dc.stock
+  </select>
+
+
+    <select id="findDrugStockCount" resultType="java.lang.Integer">
+    SELECT
+    count(*)
+    FROM
+    drug_catalog dc LEFT JOIN drug_store ds ON dc.store_id = ds.id
+    <where>
+        <if test="keyword != null and keyword !=''">
+            <bind name="keywords" value="'%'+keyword +'%'"/>
+            (dc.drug_code LIKE #{keywords}
+            OR dc.good_name LIKE #{keywords})
+        </if>
+        <if test="storeId != null">
+            AND dc.store_id = #{storeId}
+        </if>
+    </where>
+    </select>
+  <select id="findByDrugIdCount" resultType="java.lang.Integer">
+    SELECT
+    COUNT(*)
+    FROM
+      drug_catalog
+      <where>
+          <if test="goodName != null and goodName !=''">
+              <bind name="goodNames" value="'%'+goodName +'%'"/>
+              (good_name LIKE #{goodNames})
+          </if>
+              and store_id = #{storeId}
+      </where>
+
+  </select>
+    <update id="delDrug">
+        update drug_catalog
+        SET drug_id = NULL,
+        insurance_id = NULL
+        WHERE store_id = #{storeId}
+        AND drug_code = #{drugCode}
+    </update>
+
+    <select id="findNoDrugId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        from drug_catalog
+        WHERE
+        drug_code = #{drugCode}
+        AND store_id = #{storeId}
+    </select>
+    <select id="findCatalog" resultType="com.jsmscp.dr.dto.DrugCatalogDto">
+        select
+        <include refid="Base_Column_List" />
+        from drug_catalog
+        where id = #{catalogId}
+    </select>
+    <!--查看库存数量-->
+    <select id="findAllStockSum" resultType="java.lang.Integer">
+        SELECT
+        dc.store_stock
+        FROM
+        drug_catalog dc
+        JOIN drug_store ds ON dc.store_id = ds.id
+        <where>
+                dc.store_id = #{storeId}
+            <if test="catalogId != null">
+                AND dc.id =  #{catalogId}
+            </if>
+        </where>
+    </select>
+    <!--查看入库库存数量-->
+    <select id="findStockInSum" resultType="java.lang.Integer">
+        SELECT
+        SUM(quantity)
+        FROM
+        drug_delivery dd
+        JOIN drug_delivery_item ddi ON ddi.deliver_id = dd.id
+        JOIN drug_store ds ON dd.store_id = ds.id
+        JOIN drug_catalog dc ON dc.drug_code = ddi.drug_code
+        WHERE
+        dd.store_id = #{storeId}
+        <if test="catalogId != null">
+            AND ddi.catalog_id = #{catalogId}
+        </if>
+    </select>
+
+    <!--查询出库库存数量-->
+    <select id="findStockOutSum" resultType="java.lang.Integer">
+        SELECT
+        SUM(quantity)
+        FROM
+        drug_stock_out dso
+        JOIN drug_stock_out_item dsoi ON dsoi.store_out_id = dso.id
+        JOIN drug_store ds ON dso.store_id =ds.id
+        JOIN drug_catalog dc ON  dc.drug_code = dsoi.drug_code
+        WHERE
+        dso.store_id = #{storeId}
+        <if test="catalogId != null">
+            AND dsoi.catalog_id = #{catalogId}
+        </if>
+    </select>
+    <select id="findAllCatalogByKey" resultType="java.lang.String">
+        SELECT
+        good_name
+        FROM
+        drug_catalog
+        WHERE
+        <bind name="keywords" value="'%'+keyword+'%'"/>
+        good_name LIKE #{keywords}
+        AND store_id = #{storeId}
+        LIMIT #{zeroNo}, #{dropDownListSize}
+    </select>
+
+    <select id="findDrugStockInCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        drug_delivery dd
+        JOIN drug_delivery_item ddi ON ddi.deliver_id = dd.id
+        JOIN drug_store ds ON dd.store_id = ds.id
+        JOIN drug_catalog dc ON dc.drug_code = ddi.drug_code
+        WHERE
+        dd.store_id = #{storeId}
+        <if test="catalogId != null">
+            AND ddi.catalog_id = #{catalogId}
+        </if>
+    </select>
+
+    <select id="findStockOutCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        drug_stock_out dso
+        JOIN drug_stock_out_item dsoi ON dsoi.store_out_id = dso.id
+        JOIN drug_store ds ON dso.store_id =ds.id
+        JOIN drug_catalog dc ON  dc.drug_code = dsoi.drug_code
+        WHERE
+        dso.store_id = #{storeId}
+        <if test="catalogId != null">
+            AND dsoi.catalog_id = #{catalogId}
+        </if>
+    </select>
+
+
+    <!--药店端库存管理数据导出-->
+    <select id="exportStock" resultType="com.jsmscp.dr.dto.DrugCatalogDto">
+        SELECT
+        dc.id,
+        ds.`name` store_name,
+        dc.good_name drug_name,
+        dc.drug_id,
+        dc.good_name,
+        dc.drug_code,
+        dc.unit,
+        dc.dosage_form,
+        dc.spec,
+        dc.direction,
+        dc.`status`,
+        IFNULL(dc.store_stock,init_stock) stock,
+        dc.manufacture
+        FROM
+        drug_catalog dc LEFT JOIN drug_store ds ON dc.store_id = ds.id
+        <where>
+            <if test="keyword != null and keyword !=''">
+                <bind name="keywords" value="'%'+keyword +'%'"/>
+                (dc.drug_code LIKE #{keywords}
+                OR dc.good_name LIKE #{keywords})
+            </if>
+        </where>
+    </select>
+
+    <update id="updateStock">
+            UPDATE
+            drug_catalog
+            SET
+        <choose>
+            <when test="stock == null">
+            stock = 0
+            </when>
+        <otherwise>
+          stock = #{stock}
+        </otherwise>
+        </choose>
+            WHERE id = #{id}
+    </update>
+
+
+    <select id="findByStoreId" resultMap="BaseResultMap">
+        SELECT
+          id,
+          init_stock
+        FROM
+          drug_catalog
+        WHERE
+          store_id = #{storeId}
+    </select>
+
+</mapper>

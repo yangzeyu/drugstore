@@ -1,0 +1,22 @@
+/*屏幕小于1366时*/
+@media screen and (max-width: 1366px){
+    .modal-dialog{
+        width: 60%;
+        top: 3%;
+    }
+}
+
+@media screen and (max-width: 1024px){
+    .modal-dialog{
+        width: 70%;
+        top: 2%;
+    }
+}
+
+/*屏幕大于1366时*/
+@media screen and (min-width: 1366px){
+    .modal-dialog{
+        width: 45%;
+        top: 18%;
+    }
+}

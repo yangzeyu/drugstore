@@ -1,0 +1,11 @@
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter')
+	compile('org.springframework.security:spring-security-config')
+	compile('com.alibaba:fastjson:1.2.49')
+	compile('org.springframework.boot:spring-boot-starter-cache')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile project(':mapper')
+	compile project(':constant')
+	compile project(':util')
+
+}

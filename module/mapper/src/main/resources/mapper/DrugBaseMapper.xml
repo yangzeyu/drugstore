@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsmscp.dr.mapper.DrugBaseMapper">
+  <resultMap id="BaseResultMap" type="com.jsmscp.dr.entity.DrugBase">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="insurance_id" jdbcType="BIGINT" property="insuranceId" />
+    <result column="platform_code" jdbcType="VARCHAR" property="platformCode" />
+    <result column="name_pinyin" jdbcType="VARCHAR" property="namePinyin" />
+    <result column="good_name" jdbcType="VARCHAR" property="goodName" />
+    <result column="good_name_pinyin" jdbcType="VARCHAR" property="goodNamePinyin" />
+    <result column="dosage_form" jdbcType="VARCHAR" property="dosageForm" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="spec" jdbcType="VARCHAR" property="spec" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="stand_spec_rate" jdbcType="INTEGER" property="standSpecRate" />
+    <result column="unit_price" jdbcType="DECIMAL" property="unitPrice" />
+    <result column="retail_price" jdbcType="DECIMAL" property="retailPrice" />
+    <result column="permission_number" jdbcType="VARCHAR" property="permissionNumber" />
+    <result column="manufacture_id" jdbcType="INTEGER" property="manufactureId" />
+    <result column="is_medical_insurance" jdbcType="TINYINT" property="isMedicalInsurance" />
+    <result column="once_number" jdbcType="VARCHAR" property="onceNumber" />
+    <result column="once_unit" jdbcType="VARCHAR" property="onceUnit" />
+    <result column="freq_code" jdbcType="VARCHAR" property="freqCode" />
+    <result column="freq_name" jdbcType="VARCHAR" property="freqName" />
+    <result column="max_once_number" jdbcType="INTEGER" property="maxOnceNumber" />
+    <result column="direction" jdbcType="VARCHAR" property="direction" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, insurance_id, platform_code, name_pinyin, good_name, good_name_pinyin,
+    dosage_form, type, spec, status, unit, stand_spec_rate, unit_price, retail_price,
+    permission_number, manufacture_id, is_medical_insurance, once_number, once_unit,
+    freq_code, freq_name, max_once_number, direction, create_at, update_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from drug_base
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from drug_base
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jsmscp.dr.entity.DrugBase">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_base (name, insurance_id, platform_code,
+    name_pinyin, good_name, good_name_pinyin,
+    dosage_form, type, spec,
+    status, unit, stand_spec_rate,
+    unit_price, retail_price, permission_number,
+    manufacture_id, is_medical_insurance, once_number,
+    once_unit, freq_code, freq_name,
+    max_once_number, direction, create_at,
+    update_at)
+    values (#{name,jdbcType=VARCHAR}, #{insuranceId,jdbcType=BIGINT}, #{platformCode,jdbcType=VARCHAR},
+    #{namePinyin,jdbcType=VARCHAR}, #{goodName,jdbcType=VARCHAR}, #{goodNamePinyin,jdbcType=VARCHAR},
+    #{dosageForm,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{spec,jdbcType=VARCHAR},
+    #{status,jdbcType=TINYINT}, #{unit,jdbcType=VARCHAR}, #{standSpecRate,jdbcType=INTEGER},
+    #{unitPrice,jdbcType=DECIMAL}, #{retailPrice,jdbcType=DECIMAL}, #{permissionNumber,jdbcType=VARCHAR},
+    #{manufactureId,jdbcType=INTEGER}, #{isMedicalInsurance,jdbcType=TINYINT}, #{onceNumber,jdbcType=VARCHAR},
+    #{onceUnit,jdbcType=VARCHAR}, #{freqCode,jdbcType=VARCHAR}, #{freqName,jdbcType=VARCHAR},
+    #{maxOnceNumber,jdbcType=INTEGER}, #{direction,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP},
+    #{updateAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jsmscp.dr.entity.DrugBase">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into drug_base
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="insuranceId != null">
+        insurance_id,
+      </if>
+      <if test="platformCode != null">
+        platform_code,
+      </if>
+      <if test="namePinyin != null">
+        name_pinyin,
+      </if>
+      <if test="goodName != null">
+        good_name,
+      </if>
+      <if test="goodNamePinyin != null">
+        good_name_pinyin,
+      </if>
+      <if test="dosageForm != null">
+        dosage_form,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="spec != null">
+        spec,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="standSpecRate != null">
+        stand_spec_rate,
+      </if>
+      <if test="unitPrice != null">
+        unit_price,
+      </if>
+      <if test="retailPrice != null">
+        retail_price,
+      </if>
+      <if test="permissionNumber != null">
+        permission_number,
+      </if>
+      <if test="manufactureId != null">
+        manufacture_id,
+      </if>
+      <if test="isMedicalInsurance != null">
+        is_medical_insurance,
+      </if>
+      <if test="onceNumber != null">
+        once_number,
+      </if>
+      <if test="onceUnit != null">
+        once_unit,
+      </if>
+      <if test="freqCode != null">
+        freq_code,
+      </if>
+      <if test="freqName != null">
+        freq_name,
+      </if>
+      <if test="maxOnceNumber != null">
+        max_once_number,
+      </if>
+      <if test="direction != null">
+        direction,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceId != null">
+        #{insuranceId,jdbcType=BIGINT},
+      </if>
+      <if test="platformCode != null">
+        #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="namePinyin != null">
+        #{namePinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="goodName != null">
+        #{goodName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodNamePinyin != null">
+        #{goodNamePinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="spec != null">
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="standSpecRate != null">
+        #{standSpecRate,jdbcType=INTEGER},
+      </if>
+      <if test="unitPrice != null">
+        #{unitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="retailPrice != null">
+        #{retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="permissionNumber != null">
+        #{permissionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="manufactureId != null">
+        #{manufactureId,jdbcType=INTEGER},
+      </if>
+      <if test="isMedicalInsurance != null">
+        #{isMedicalInsurance,jdbcType=TINYINT},
+      </if>
+      <if test="onceNumber != null">
+        #{onceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="onceUnit != null">
+        #{onceUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="freqCode != null">
+        #{freqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="freqName != null">
+        #{freqName,jdbcType=VARCHAR},
+      </if>
+      <if test="maxOnceNumber != null">
+        #{maxOnceNumber,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null">
+        #{direction,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jsmscp.dr.entity.DrugBase">
+    update drug_base
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceId != null">
+        insurance_id = #{insuranceId,jdbcType=BIGINT},
+      </if>
+      <if test="platformCode != null">
+        platform_code = #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="namePinyin != null">
+        name_pinyin = #{namePinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="goodName != null">
+        good_name = #{goodName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodNamePinyin != null">
+        good_name_pinyin = #{goodNamePinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        dosage_form = #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="spec != null">
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="standSpecRate != null">
+        stand_spec_rate = #{standSpecRate,jdbcType=INTEGER},
+      </if>
+      <if test="unitPrice != null">
+        unit_price = #{unitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="retailPrice != null">
+        retail_price = #{retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="permissionNumber != null">
+        permission_number = #{permissionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="manufactureId != null">
+        manufacture_id = #{manufactureId,jdbcType=INTEGER},
+      </if>
+      <if test="isMedicalInsurance != null">
+        is_medical_insurance = #{isMedicalInsurance,jdbcType=TINYINT},
+      </if>
+      <if test="onceNumber != null">
+        once_number = #{onceNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="onceUnit != null">
+        once_unit = #{onceUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="freqCode != null">
+        freq_code = #{freqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="freqName != null">
+        freq_name = #{freqName,jdbcType=VARCHAR},
+      </if>
+      <if test="maxOnceNumber != null">
+        max_once_number = #{maxOnceNumber,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null">
+        direction = #{direction,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jsmscp.dr.entity.DrugBase">
+    update drug_base
+    set name = #{name,jdbcType=VARCHAR},
+      insurance_id = #{insuranceId,jdbcType=BIGINT},
+      platform_code = #{platformCode,jdbcType=VARCHAR},
+      name_pinyin = #{namePinyin,jdbcType=VARCHAR},
+      good_name = #{goodName,jdbcType=VARCHAR},
+      good_name_pinyin = #{goodNamePinyin,jdbcType=VARCHAR},
+      dosage_form = #{dosageForm,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      spec = #{spec,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      unit = #{unit,jdbcType=VARCHAR},
+      stand_spec_rate = #{standSpecRate,jdbcType=INTEGER},
+      unit_price = #{unitPrice,jdbcType=DECIMAL},
+      retail_price = #{retailPrice,jdbcType=DECIMAL},
+      permission_number = #{permissionNumber,jdbcType=VARCHAR},
+      manufacture_id = #{manufactureId,jdbcType=INTEGER},
+      is_medical_insurance = #{isMedicalInsurance,jdbcType=TINYINT},
+      once_number = #{onceNumber,jdbcType=VARCHAR},
+      once_unit = #{onceUnit,jdbcType=VARCHAR},
+      freq_code = #{freqCode,jdbcType=VARCHAR},
+      freq_name = #{freqName,jdbcType=VARCHAR},
+      max_once_number = #{maxOnceNumber,jdbcType=INTEGER},
+      direction = #{direction,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findDrugBase" resultType="com.jsmscp.dr.dto.DrugBaseDto">
+    SELECT
+    db.id,
+    db.`name`,
+    db.good_name,
+    db.dosage_form,
+    CASE db.type
+    WHEN 1 THEN '中药'
+    WHEN 2 THEN '西药'
+    ELSE '其他' END type,
+    db.spec,
+    db.unit,
+    db.stand_spec_rate,
+    db.unit_price,
+    db.retail_price,
+    db.platform_code,
+    db.permission_number,
+    db.manufacture_id,
+    db.once_unit,
+    db.status,
+    db.once_number,
+    db.freq_name,
+    db.freq_code,
+    db.direction,
+    m.short_name manufactureName,
+    mi.medical_insurance_code
+    FROM drug_base db JOIN manufacture m ON db.manufacture_id = m.id
+    Left JOIN medical_insurance mi ON db.insurance_id = mi.id
+    <where>
+      <if test="keyword != null and keyword != ''">
+        <bind name="keywords" value="'%' + keyword + '%'"/>
+        (db.`name` LIKE #{keywords}
+        OR db.good_name LIKE #{keywords}
+        OR db.name_pinyin LIKE #{keywords}
+        OR db.good_name_pinyin LIKE #{keywords})
+      </if>
+      <if test="type != null">
+        AND db.`type` = #{type}
+      </if>
+      <if test="permissionNum != null and permissionNum != ''">
+        AND db.permission_number = #{permissionNum}
+      </if>
+      <if test="manufactureId != null">
+        AND db.manufacture_id = #{manufactureId}
+      </if>
+      <if test="medicalInsuranceId != null">
+        AND mi.id = #{medicalInsuranceId}
+      </if>
+    </where>
+    order BY db.id,mi.id
+    LIMIT ${pageNo},${pageSize}
+  </select>
+  <select id="findCount" resultType="java.lang.Integer">
+    SELECT
+    COUNT(*)
+    FROM drug_base db JOIN manufacture m ON db.manufacture_id = m.id
+    LEFT JOIN medical_insurance mi ON db.insurance_id = mi.id
+    <where>
+      <if test="keyword != null and keyword != ''">
+        <bind name="keywords" value="'%' + keyword + '%'"/>
+        (db.`name` LIKE #{keywords} OR db.good_name LIKE #{keywords})
+      </if>
+      <if test="type != null">
+        AND db.`type` = #{type}
+      </if>
+      <if test="permissionNum != null and permissionNum != ''">
+        AND db.permission_number = #{permissionNum}
+      </if>
+      <if test="manufactureId != null">
+        AND db.manufacture_id = #{manufactureId}
+      </if>
+      <if test="medicalInsuranceId != null">
+        AND db.insurance_id = #{medicalInsuranceId}
+      </if>
+    </where>
+  </select>
+
+  <select id="findDrug" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from drug_base
+    where
+    dosage_form = #{dosageForm}
+    AND spec = #{spec}
+    AND good_name = #{goodName}
+    AND unit = #{unit}
+    AND manufacture_id = #{manufactureId}
+  </select>
+
+  <select id="findAllDrug" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from drug_base
+  </select>
+
+  <select id="findByInsuranceCode" resultMap="BaseResultMap">
+    select
+      db.*
+    from drug_base db JOIN
+      medical_insurance mi ON db.insurance_id = mi.id
+    where mi.medical_insurance_code =  #{insuranceCode,jdbcType=VARCHAR}
+  </select>
+
+  <resultMap id="LazyResultMap" type="com.jsmscp.dr.entity.DrugBase" extends="BaseResultMap">
+    <association column="manufacture_id" property="manufacture" fetchType="lazy" javaType="com.jsmscp.dr.entity.Manufacture" select="com.jsmscp.dr.mapper.ManufactureMapper.selectByPrimaryKey"/>
+  </resultMap>
+
+  <select id="findAllDrugBase" resultType="com.jsmscp.dr.dto.DrugBaseDto">
+    SELECT
+    db.id,
+    db.`name`,
+    db.platform_code,
+    db.dosage_form,
+    db.insurance_id,
+    mi.collect_lvl,
+    mi.collect_type,
+    mi.three_directory_type,
+    db.stand_spec_rate
+    from drug_base db
+    JOIN medical_insurance mi on mi.id = db.insurance_id
+    <where>
+      <if test="keyword != null and keyword != ''">
+      <bind name="keywords" value="'%' + keyword + '%'"/>
+      (db.`name` LIKE #{keywords}
+      OR db.good_name LIKE #{keywords}
+      OR db.name_pinyin LIKE #{keywords}
+      OR db.good_name_pinyin LIKE #{keywords})
+    </if>
+      <if test="manufactureId != null">
+        and db.manufacture_id =#{manufactureId}
+      </if>
+    </where>
+  </select>
+    <select id="findById" parameterType="java.lang.Long" resultMap="LazyResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from drug_base
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+  <select id="findAllDrugBaseCount" resultType="java.lang.Integer">
+    SELECT
+    count(*)
+    from drug_base
+    <where>
+      <if test="keyword != null and keyword != ''">
+        <bind name="keywords" value="'%' + keyword + '%'"/>
+        (`name` LIKE #{keywords}
+        OR good_name LIKE #{keywords}
+        OR name_pinyin LIKE #{keywords}
+        OR good_name_pinyin LIKE #{keywords})
+      </if>
+      <if test="manufactureId != null">
+        and manufacture_id =#{manufactureId}
+      </if>
+    </where>
+  </select>
+
+
+  <select id="selectByDrugId" resultType="com.jsmscp.dr.dto.DrugBaseDto">
+    SELECT
+      db.id,
+      db.`name`,
+      db.good_name,
+      db.dosage_form,
+      db.type,
+      db.spec,
+      db.unit,
+      db.retail_price,
+      db.permission_number,
+      db.unit_price,
+      db.`status`,
+      db.platform_code,
+      db.unit,
+      m.`name` manufacture_name,
+      m.id manufacture_id,
+      db.stand_spec_rate,
+      mi.id medical_insurance_id,
+      mi.medical_insurance_code
+  FROM
+      drug_base db
+  JOIN manufacture m ON db.manufacture_id = m.id
+  JOIN medical_insurance mi ON db.insurance_id = mi.id
+      where db.id = #{drugId,jdbcType=BIGINT}
+  </select>
+
+  <select id="findByCode" resultType="java.lang.Integer">
+    select count(*)
+    FROM drug_base
+    where platform_code = #{platFormCode}
+  </select>
+
+  <select id="findNoInsuranceId" resultType="com.jsmscp.dr.dto.DrugBaseDto">
+    SELECT
+      db.id,
+      db.`name`,
+      db.good_name,
+      db.dosage_form,
+      db.type,
+      db.spec,
+      db.unit,
+      db.retail_price,
+      db.permission_number,
+      db.unit_price,
+      db.`status`,
+      db.platform_code,
+      db.unit,
+      db.stand_spec_rate,
+      mi.medical_insurance_code
+    FROM drug_base db JOIN medical_insurance mi on db.insurance_id = mi.id
+    WHERE db.insurance_id IS NULL
+
+  </select>
+
+  <select id="selectDrugInsurance" resultType="com.jsmscp.dr.entity.DrugBase">
+      SELECT
+      db.id,
+      db.`name`,
+      db.good_name,
+      db.dosage_form,
+      db.type,
+      db.spec,
+      db.unit,
+      db.retail_price,
+      db.permission_number,
+      db.unit_price,
+      db.`status`,
+      db.platform_code,
+      db.unit,
+      db.stand_spec_rate
+      FROM drug_base db
+      LEFT JOIN medical_insurance mi ON db.insurance_id = mi.id
+    <where>
+        <if test="keyword != null and keyword != ''">
+            <bind name="keywords" value="'%' + keyword + '%'"/>
+            (db.`name` LIKE #{keywords}
+            OR db.good_name LIKE #{keywords}
+            OR db.name_pinyin LIKE #{keywords}
+            OR db.good_name_pinyin LIKE #{keywords})
+        </if>
+        <if test="manufactureId != null">
+            and db.manufacture_id =#{manufactureId}
+        </if>
+    </where>
+  </select>
+
+  <!--手工对码-->
+  <select id="compareInsurance" parameterType="com.jsmscp.dr.dto.DrugBaseDto">
+    UPDATE drug_base
+    SET insurance_id = #{medicalInsuranceId}
+    WHERE id = #{drugId}
+  </select>
+
+  <!--解除对码-->
+  <select id="delCompare" parameterType="com.jsmscp.dr.dto.DrugBaseDto">
+    UPDATE drug_base
+    SET insurance_id = null
+    WHERE id = #{drugId}
+  </select>
+  <select id="findAllDrugByKey" resultType="java.lang.String">
+     SELECT
+      `name`
+    FROM
+      drug_base
+      where
+    <bind name="keywords" value="'%' + keyword + '%'"/>
+    (`name` LIKE #{keywords}
+    OR good_name LIKE #{keywords})
+    LIMIT #{zeroNo}, #{dropDownListSize}
+  </select>
+
+  <!--根据医保id查询药品-->
+  <select id="selectByInsuranceId" resultType="com.jsmscp.dr.entity.DrugBase">
+    SELECT
+    db.id,
+    db.`name`,
+    db.good_name,
+    db.dosage_form,
+    db.type,
+    db.spec,
+    db.unit,
+    db.retail_price,
+    db.permission_number,
+    db.unit_price,
+    db.`status`,
+    db.platform_code,
+    db.unit,
+    db.stand_spec_rate
+    FROM drug_base db JOIN medical_insurance mi ON db.insurance_id = mi.id
+    WHERE db.insurance_id = #{id}
+  </select>
+
+</mapper>

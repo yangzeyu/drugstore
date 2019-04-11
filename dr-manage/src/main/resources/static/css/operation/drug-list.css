@@ -1,0 +1,27 @@
+/*屏幕小于1366时*/
+@media screen and (max-width: 1366px){
+    .modal-dialog{
+        width: 53%;
+    }
+
+    .search-keyword{
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 1024px){
+    .modal-dialog{
+        width: 70%;
+    }
+}
+
+/*屏幕大于1366时*/
+@media screen and (min-width: 1366px){
+    .modal-dialog{
+        width: 40%;
+    }
+    .search-keyword{
+        width: 60%;
+    }
+}
+

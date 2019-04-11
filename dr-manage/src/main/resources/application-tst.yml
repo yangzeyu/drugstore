@@ -1,0 +1,19 @@
+#datasource
+spring:
+  datasource:
+    druid:
+      name: devdb
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.1.209:3306/drugstore_regulation_tst?userUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: yaoyi_dev
+      password: 'Yaoyi_2018'
+      initial-size: 10
+      max-active: 20
+
+server:
+  port: 8095
+
+
+management:
+  security:
+    enabled: false
